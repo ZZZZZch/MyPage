@@ -94,13 +94,13 @@
 
 
 
-<meta name="description" content="#生成对抗网络（Generative Adversarial Network） 目录：  生成对抗网络介绍  简单的生成对抗网络  深度生成对抗网络  条件生成对抗网络  INFO生成对抗网络  Wasserstein GAN  实例解析：deepcolor   ##1.  生成对抗网络介绍 ###基本介绍  非监督式学习  神经网络相互博弈  扬·古德费洛2014年提出   ###组成部分  生">
+<meta name="description" content="生成对抗网络（Generative Adversarial Network）目录： 生成对抗网络介绍  简单的生成对抗网络  深度生成对抗网络  条件生成对抗网络  INFO生成对抗网络  Wasserstein GAN  实例解析：deepcolor   生成对抗网络介绍基本介绍 非监督式学习  神经网络相互博弈  扬·古德费洛2014年提出   组成部分 生成网络：从潜在空间（latent s">
 <meta name="keywords" content="-GAN">
 <meta property="og:type" content="article">
 <meta property="og:title" content="My New Post">
 <meta property="og:url" content="http://ZhuChenghao.com/2017/12/11/My-New-Post/index.html">
 <meta property="og:site_name" content="Zhu Chenghao&#39;s Blog">
-<meta property="og:description" content="#生成对抗网络（Generative Adversarial Network） 目录：  生成对抗网络介绍  简单的生成对抗网络  深度生成对抗网络  条件生成对抗网络  INFO生成对抗网络  Wasserstein GAN  实例解析：deepcolor   ##1.  生成对抗网络介绍 ###基本介绍  非监督式学习  神经网络相互博弈  扬·古德费洛2014年提出   ###组成部分  生">
+<meta property="og:description" content="生成对抗网络（Generative Adversarial Network）目录： 生成对抗网络介绍  简单的生成对抗网络  深度生成对抗网络  条件生成对抗网络  INFO生成对抗网络  Wasserstein GAN  实例解析：deepcolor   生成对抗网络介绍基本介绍 非监督式学习  神经网络相互博弈  扬·古德费洛2014年提出   组成部分 生成网络：从潜在空间（latent s">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image002.png">
 <meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image004.png">
@@ -162,10 +162,10 @@
 <meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image115.png">
 <meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image117.png">
 <meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image119.png">
-<meta property="og:updated_time" content="2017-12-11T07:24:56.000Z">
+<meta property="og:updated_time" content="2017-12-11T07:31:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="My New Post">
-<meta name="twitter:description" content="#生成对抗网络（Generative Adversarial Network） 目录：  生成对抗网络介绍  简单的生成对抗网络  深度生成对抗网络  条件生成对抗网络  INFO生成对抗网络  Wasserstein GAN  实例解析：deepcolor   ##1.  生成对抗网络介绍 ###基本介绍  非监督式学习  神经网络相互博弈  扬·古德费洛2014年提出   ###组成部分  生">
+<meta name="twitter:description" content="生成对抗网络（Generative Adversarial Network）目录： 生成对抗网络介绍  简单的生成对抗网络  深度生成对抗网络  条件生成对抗网络  INFO生成对抗网络  Wasserstein GAN  实例解析：deepcolor   生成对抗网络介绍基本介绍 非监督式学习  神经网络相互博弈  扬·古德费洛2014年提出   组成部分 生成网络：从潜在空间（latent s">
 <meta name="twitter:image" content="http://zhuchenghao.com/img/01/clip_image002.png">
 
 
@@ -391,9 +391,7 @@
       
 
       
-        <p>#生成对抗网络（Generative Adversarial Network）</p>
-<p>目录：</p>
-<ol>
+        <h1 id="生成对抗网络（Generative-Adversarial-Network）"><a href="#生成对抗网络（Generative-Adversarial-Network）" class="headerlink" title="生成对抗网络（Generative Adversarial Network）"></a>生成对抗网络（Generative Adversarial Network）</h1><h2 id="目录："><a href="#目录：" class="headerlink" title="目录："></a>目录：</h2><ol>
 <li><p>生成对抗网络介绍</p>
 </li>
 <li><p>简单的生成对抗网络</p>
@@ -409,9 +407,7 @@
 <li><p>实例解析：deepcolor</p>
 </li>
 </ol>
-<p>##1.  生成对抗网络介绍</p>
-<p>###基本介绍</p>
-<ul>
+<h1 id="生成对抗网络介绍"><a href="#生成对抗网络介绍" class="headerlink" title="生成对抗网络介绍"></a>生成对抗网络介绍</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><ul>
 <li><p>非监督式学习</p>
 </li>
 <li><p>神经网络相互博弈</p>
@@ -419,8 +415,7 @@
 <li><p>扬·古德费洛2014年提出</p>
 </li>
 </ul>
-<p>###组成部分</p>
-<ul>
+<h2 id="组成部分"><a href="#组成部分" class="headerlink" title="组成部分"></a>组成部分</h2><ul>
 <li><p>生成网络：从潜在空间（latent space）中随机采样作为输入，其输出结果需要尽量模仿训练集中的真实样本。</p>
 </li>
 <li><p>判别网络：判别网络的输入为真实样本或生成网络的输出，其目的是将生成网络的输出从真实样本中尽可能分辨出来。</p>
@@ -428,10 +423,8 @@
 <li><p>生成网络则要尽可能地欺骗判别网络。两个网络相互对抗、不断调整参数，最终目的是使判别网络无法判断生成网络的输出结果是否真实。</p>
 </li>
 </ul>
-<p>###用途</p>
-<p>图片生成、视频生成、三维物体模型、甚至文本生成等。</p>
-<p>###实现方式与数学原理</p>
-<p><img src="/img/01/clip_image002.png" alt="img"></p>
+<h2 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h2><p>图片生成、视频生成、三维物体模型、甚至文本生成等。</p>
+<h2 id="实现方式与数学原理"><a href="#实现方式与数学原理" class="headerlink" title="实现方式与数学原理"></a>实现方式与数学原理</h2><p><img src="/img/01/clip_image002.png" alt="img"></p>
 <ul>
 <li><p>生成模型G与判别模型D</p>
 </li>
@@ -471,47 +464,36 @@
 <p><img src="/img/01/clip_image031.png" alt="img"></p>
 <p><img src="/img/01/clip_image033.png" alt="img"><img src="/img/01/clip_image035.png" alt="img"></p>
 <p>KL散度永远大于等于0，可以知道目标函数最终最优值为-log4</p>
-<p>###举例：模拟高斯分布</p>
-<p><img src="/img/01/clip_image037.png" alt="img"></p>
+<h2 id="举例：模拟高斯分布"><a href="#举例：模拟高斯分布" class="headerlink" title="举例：模拟高斯分布"></a>举例：模拟高斯分布</h2><p><img src="/img/01/clip_image037.png" alt="img"></p>
 <p>其中，蓝线为判别分界，黑点为真实数据，绿线为生成模型，整个高斯分布的学习过程，就是先优化判别模型，使得蓝色判别分界最优化，再优化生成模型，使得生成模型和真实高斯分布能够迷惑判别模型，判别结果为0.5（即完全迷惑）。</p>
-<p>##2.   简单的生成对抗网络</p>
-<p>###简单GAN模型结构</p>
-<p><img src="/img/01/clip_image039.png" alt="img"></p>
+<h1 id="简单的生成对抗网络"><a href="#简单的生成对抗网络" class="headerlink" title="简单的生成对抗网络"></a>简单的生成对抗网络</h1><h2 id="简单GAN模型结构"><a href="#简单GAN模型结构" class="headerlink" title="简单GAN模型结构"></a>简单GAN模型结构</h2><p><img src="/img/01/clip_image039.png" alt="img"></p>
 <pre><code>例如，该结构使用简单的神经网络结构，生成器G方面使用全连接，输入为随机初始化的Z，输出G(Z)为通过生成器生成的图片数据。将生成图片与真实图片再放入一个神经网络结构进行判别，判断来自X的可能性，是一个常量。
-</code></pre><p>###简单GAN模型效果</p>
-<pre><code>在不同的实验中，对模型进行了不同的更改，也达到了一定的效果，在GOODFLOW的论文中采用了不同的数据集和不同的模型，获得了如下生成效果     
+</code></pre><h2 id="简单GAN模型效果"><a href="#简单GAN模型效果" class="headerlink" title="简单GAN模型效果"></a>简单GAN模型效果</h2><pre><code>在不同的实验中，对模型进行了不同的更改，也达到了一定的效果，在GOODFLOW的论文中采用了不同的数据集和不同的模型，获得了如下生成效果     
 </code></pre><p><img src="/img/01/clip_image041.png" alt="img"><img src="/img/01/clip_image043.png" alt="img"></p>
-<p>##3.    深度生成对抗网络</p>
-<p>深度生成对抗网络，也就是常说的DCGAN，深度卷积生成对抗网络，在简单生成对抗网络的基础上加入的卷积层，使得生成对抗神经网络对图像等数据的生成效果更加优秀。</p>
-<p>###DCGAN模型框架</p>
-<p>​       整个生成模型部分结构如下，它是由最初随机生成的Z，通过多次de-convolution操作，生成成为64x64x3的图片。</p>
+<h1 id="深度生成对抗网络"><a href="#深度生成对抗网络" class="headerlink" title="深度生成对抗网络"></a>深度生成对抗网络</h1><p>深度生成对抗网络，也就是常说的DCGAN，深度卷积生成对抗网络，在简单生成对抗网络的基础上加入的卷积层，使得生成对抗神经网络对图像等数据的生成效果更加优秀。</p>
+<h2 id="DCGAN模型框架"><a href="#DCGAN模型框架" class="headerlink" title="DCGAN模型框架"></a>DCGAN模型框架</h2><p>​       整个生成模型部分结构如下，它是由最初随机生成的Z，通过多次de-convolution操作，生成成为64x64x3的图片。</p>
 <p><img src="/img/01/clip_image045.png" alt="img"></p>
 <p>De-convolution是卷积的逆向操作，常用的方法为transport-convolution，上采样卷积，但上采样卷积由不能算真正的反卷积，因为它只能还原大小，无法还原其真实值。</p>
 <p><img src="/img/01/clip_image047.png" alt="img"></p>
 <p>​       蓝色2x2区域为输入，通过3x3的反卷积操作，得到了上面的4x4的区域。</p>
 <p>​       DCGAN模型在LSUN（卧室图片集）上效果</p>
 <p><img src="/img/01/clip_image049.png" alt="img"></p>
-<p>###DCGAN模型实现时的技术细节</p>
-<p>(1)D Leaky-relu激活函数，G relu 激活函数。<br>(2)使用batch_normalization。<br>(3)没有pooling层，使用步长为2的卷积。<br>(4)学习率很小，rate=0.0002。</p>
-<p>###启发<br>    DCGAN生成了图片之后，在D模型中转化为了特征向量后同样能够用来做分类等传统操作吗？</p>
-<p><img src="/img/01/clip_image051.png" alt="img"></p>
+<h2 id="DCGAN模型实现时的技术细节"><a href="#DCGAN模型实现时的技术细节" class="headerlink" title="DCGAN模型实现时的技术细节"></a>DCGAN模型实现时的技术细节</h2><p>(1)D Leaky-relu激活函数，G relu 激活函数。<br>(2)使用batch_normalization。<br>(3)没有pooling层，使用步长为2的卷积。<br>(4)学习率很小，rate=0.0002。</p>
+<h2 id="启发"><a href="#启发" class="headerlink" title="启发"></a>启发</h2><pre><code>DCGAN生成了图片之后，在D模型中转化为了特征向量后同样能够用来做分类等传统操作吗？
+</code></pre><p><img src="/img/01/clip_image051.png" alt="img"></p>
 <pre><code>有人（原论文）将DCGAN+SVM用于图片分类，即将DCGAN中生成的图片同样进行特征提取，输入SVM中进行分类，效果还不错。
-</code></pre><p>###DCGAN模型中随机初始化的噪声Z对生成结果的影响</p>
-<p>​       通过改变Z某一维度的值，生成图片会发生明显并含有规律的变化，这证明了Z噪声和词向量有一定的相似之处，在训练完GAN模型之后，能用来表达图片的特征。</p>
+</code></pre><h2 id="DCGAN模型中随机初始化的噪声Z对生成结果的影响"><a href="#DCGAN模型中随机初始化的噪声Z对生成结果的影响" class="headerlink" title="DCGAN模型中随机初始化的噪声Z对生成结果的影响"></a>DCGAN模型中随机初始化的噪声Z对生成结果的影响</h2><p>​       通过改变Z某一维度的值，生成图片会发生明显并含有规律的变化，这证明了Z噪声和词向量有一定的相似之处，在训练完GAN模型之后，能用来表达图片的特征。</p>
 <p>改变Z某一维度值后生成的图片发生的变化：<img src="/img/01/clip_image053.png" alt="img"></p>
 <p>​       在下图中，我们将戴眼镜男子的随机信号设定为Z1（可以将所有不戴眼镜男子的Z值作平均操作，后同），不戴眼镜的男子随机信号设定为Z2，不戴眼镜的女子随机信号设定为Z3，最后得到的Z4 = Z1 –Z2 + Z3。</p>
 <p><img src="/img/01/clip_image055.png" alt="img"></p>
 <pre><code>更多特征研究，如方向插值等……
 </code></pre><p><img src="/img/01/clip_image057.png" alt="img"></p>
-<p>##4.   条件生成对抗网络</p>
-<p>###条件生成对抗模型(cGAN)模型</p>
-<p>意在通过给定一些其他label信息，引导生成模型的输出。与之前我们所看到的不同的是，输入部分不仅仅是一个简单的随机噪声Z，又多了一个标准的label向量Y。</p>
+<h1 id="条件生成对抗网络"><a href="#条件生成对抗网络" class="headerlink" title="条件生成对抗网络"></a>条件生成对抗网络</h1><h2 id="条件生成对抗模型-cGAN-模型"><a href="#条件生成对抗模型-cGAN-模型" class="headerlink" title="条件生成对抗模型(cGAN)模型"></a>条件生成对抗模型(cGAN)模型</h2><p>意在通过给定一些其他label信息，引导生成模型的输出。与之前我们所看到的不同的是，输入部分不仅仅是一个简单的随机噪声Z，又多了一个标准的label向量Y。</p>
 <p>即训练过程的输入为：随机噪声信息+约束条件特征表示。</p>
 <p>目标函数更新为<img src="/img/01/clip_image059.png" alt="img"></p>
 <p><img src="/img/01/clip_image061.png" alt="img"></p>
 <p>​       </p>
-<p>###举个例子</p>
-<p>使用标签类别作为条件变量y，对编码成one-hot向量的MNIST图像进行条件对抗网络的训练。</p>
+<h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><p>使用标签类别作为条件变量y，对编码成one-hot向量的MNIST图像进行条件对抗网络的训练。</p>
 <p>效果如下，左为有条件的，右为无条件的。</p>
 <p><img src="/img/01/clip_image063.png" alt="img"><img src="/img/01/clip_image065.png" alt="img"></p>
 <p>若我们给定的Y是文字，则模型可以如下表示：</p>
@@ -528,9 +510,7 @@
 <p><img src="/img/01/clip_image077.png" alt="img"></p>
 <p>效果如下：</p>
 <p><img src="/img/01/clip_image079.png" alt="img"></p>
-<p>##5.   Info GAN</p>
-<p>###InfoGAN的基本思想</p>
-<p>​       同样也是在输入部分进行更改，输入噪声向量改变为两个部分：</p>
+<h1 id="Info-GAN"><a href="#Info-GAN" class="headerlink" title="Info GAN"></a>Info GAN</h1><h2 id="InfoGAN的基本思想"><a href="#InfoGAN的基本思想" class="headerlink" title="InfoGAN的基本思想"></a>InfoGAN的基本思想</h2><p>​       同样也是在输入部分进行更改，输入噪声向量改变为两个部分：</p>
 <p>​       （1）Z，噪声向量，随机初始化。</p>
 <p>​       （2）C，语义向量，随机初始化。定义一系列的相互独立的潜在语义变量C1、C2……</p>
 <p>这个语义变量C，是用来提供信息正则化约束项的，即潜在变量C与生成样本G(z,c)的互信息量应该比较大，即I（c;G(z,c)）应该较大。</p>
@@ -541,8 +521,7 @@
 <p><img src="/img/01/clip_image085.png" alt="img"></p>
 <p>​       最终达到的效果是，通过改变具有物理意义的C，可以用于生成不同风格的特定图片。</p>
 <p><img src="/img/01/clip_image087.png" alt="img"></p>
-<p>###数学证明：</p>
-<p>​互信息：</p>
+<h2 id="数学证明："><a href="#数学证明：" class="headerlink" title="数学证明："></a>数学证明：</h2><p>​互信息：</p>
 <p><img src="/img/01/clip_image089.png" alt="img"><img src="/img/01/clip_image091.png" alt="img"></p>
 <p>条件熵：</p>
 <p><img src="/img/01/clip_image093.png" alt="img"></p>
@@ -554,9 +533,8 @@
 <p><img src="/img/01/clip_image103.png" alt="img"></p>
 <p>引入一个估计分布q(y|x) ：</p>
 <p><img src="/img/01/clip_image105.png" alt="img"><img src="/img/01/clip_image107.png" alt="img"></p>
-<p>##6.   W GAN</p>
-<h3 id="W-GAN-简介"><a href="#W-GAN-简介" class="headerlink" title="W GAN 简介"></a>W GAN 简介</h3><p>从<a href="http://link.zhihu.com/?target=https%3A//arxiv.org/abs/1406.2661" target="_blank" rel="noopener">2014年Ian Goodfellow提出</a>以来，GAN就存在着训练困难、生成器和判别器的loss无法指示训练进程、生成样本缺乏多样性等问题。从那时起，很多论文都在尝试解决，但是效果不尽人意，比如最有名的一个改进<a href="http://link.zhihu.com/?target=https%3A//arxiv.org/abs/1511.06434" target="_blank" rel="noopener">DCGAN</a>依靠的是对判别器和生成器的架构进行实验枚举，最终找到一组比较好的网络架构设置，但是实际上是治标不治本，没有彻底解决问题。而今天的主角Wasserstein GAN（下面简称WGAN）成功地做到了以下爆炸性的几点：</p>
-<h3 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a>贡献</h3><ul>
+<h1 id="W-GAN"><a href="#W-GAN" class="headerlink" title="W GAN"></a>W GAN</h1><h2 id="W-GAN-简介"><a href="#W-GAN-简介" class="headerlink" title="W GAN 简介"></a>W GAN 简介</h2><p>从<a href="http://link.zhihu.com/?target=https%3A//arxiv.org/abs/1406.2661" target="_blank" rel="noopener">2014年Ian Goodfellow提出</a>以来，GAN就存在着训练困难、生成器和判别器的loss无法指示训练进程、生成样本缺乏多样性等问题。从那时起，很多论文都在尝试解决，但是效果不尽人意，比如最有名的一个改进<a href="http://link.zhihu.com/?target=https%3A//arxiv.org/abs/1511.06434" target="_blank" rel="noopener">DCGAN</a>依靠的是对判别器和生成器的架构进行实验枚举，最终找到一组比较好的网络架构设置，但是实际上是治标不治本，没有彻底解决问题。而今天的主角Wasserstein GAN（下面简称WGAN）成功地做到了以下爆炸性的几点：</p>
+<h2 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a>贡献</h2><ul>
 <li><p>彻底解决GAN训练不稳定的问题，不再需要小心平衡生成器和判别器的训练程度</p>
 </li>
 <li><p>基本解决了collapse mode的问题，确保了生成样本的多样性 </p>
@@ -566,8 +544,7 @@
 </ul>
 <p><img src="/img/01/clip_image109.png" alt="img"></p>
 <p>以上一切好处不需要精心设计的网络架构，最简单的多层全连接网络就可以做到</p>
-<p>###改进</p>
-<p>改进后相比原始GAN的算法实现流程却只改了四点：</p>
+<h2 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h2><p>改进后相比原始GAN的算法实现流程却只改了四点：</p>
 <ul>
 <li><p>判别器最后一层去掉sigmoid</p>
 </li>
@@ -585,8 +562,7 @@
 <p>如果WGAN和原始GAN都使用多层全连接网络（MLP），不用CNN，WGAN质量会变差些，但是原始GAN不仅质量变得更差，而且还出现了collapse mode，即多样性不足：</p>
 <p><img src="/img/01/clip_image115.png" alt="img"></p>
 <p><a href="https://zhuanlan.zhihu.com/p/25071913" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/25071913</a>  这里的公式推导太长了……</p>
-<p>##7.   实例解析：DeepColor</p>
-<h3 id="Deep-color"><a href="#Deep-color" class="headerlink" title="Deep color"></a>Deep color</h3><p><a href="https://github.com/kvfrans/deepcolor" target="_blank" rel="noopener">https://github.com/kvfrans/deepcolor</a>  deepcolor 补全色彩，条件GAN。</p>
+<h1 id="实例解析：DeepColor"><a href="#实例解析：DeepColor" class="headerlink" title="实例解析：DeepColor"></a>实例解析：DeepColor</h1><h2 id="Deep-color"><a href="#Deep-color" class="headerlink" title="Deep color"></a>Deep color</h2><p><a href="https://github.com/kvfrans/deepcolor" target="_blank" rel="noopener">https://github.com/kvfrans/deepcolor</a>  deepcolor 补全色彩，条件GAN。</p>
 <p>需要改源码才能运行！！</p>
 <p>我的运行结果：</p>
 <p><img src="/img/01/clip_image117.png" alt="img"><img src="/img/01/clip_image119.png" alt="img"></p>
@@ -738,7 +714,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#W-GAN-简介"><span class="nav-number">1.</span> <span class="nav-text"><a href="#W-GAN-&#x7B80;&#x4ECB;" class="headerlink" title="W GAN &#x7B80;&#x4ECB;"></a>W GAN &#x7B80;&#x4ECB;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#贡献"><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x8D21;&#x732E;" class="headerlink" title="&#x8D21;&#x732E;"></a>&#x8D21;&#x732E;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deep-color"><span class="nav-number">3.</span> <span class="nav-text"><a href="#Deep-color" class="headerlink" title="Deep color"></a>Deep color</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#生成对抗网络（Generative-Adversarial-Network）"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x751F;&#x6210;&#x5BF9;&#x6297;&#x7F51;&#x7EDC;&#xFF08;Generative-Adversarial-Network&#xFF09;" class="headerlink" title="&#x751F;&#x6210;&#x5BF9;&#x6297;&#x7F51;&#x7EDC;&#xFF08;Generative Adversarial Network&#xFF09;"></a>&#x751F;&#x6210;&#x5BF9;&#x6297;&#x7F51;&#x7EDC;&#xFF08;Generative Adversarial Network&#xFF09;</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目录："><span class="nav-number">1.1.</span> <span class="nav-text"><a href="#&#x76EE;&#x5F55;&#xFF1A;" class="headerlink" title="&#x76EE;&#x5F55;&#xFF1A;"></a>&#x76EE;&#x5F55;&#xFF1A;</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#生成对抗网络介绍"><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x751F;&#x6210;&#x5BF9;&#x6297;&#x7F51;&#x7EDC;&#x4ECB;&#x7ECD;" class="headerlink" title="&#x751F;&#x6210;&#x5BF9;&#x6297;&#x7F51;&#x7EDC;&#x4ECB;&#x7ECD;"></a>&#x751F;&#x6210;&#x5BF9;&#x6297;&#x7F51;&#x7EDC;&#x4ECB;&#x7ECD;</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本介绍"><span class="nav-number">2.1.</span> <span class="nav-text"><a href="#&#x57FA;&#x672C;&#x4ECB;&#x7ECD;" class="headerlink" title="&#x57FA;&#x672C;&#x4ECB;&#x7ECD;"></a>&#x57FA;&#x672C;&#x4ECB;&#x7ECD;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组成部分"><span class="nav-number">2.2.</span> <span class="nav-text"><a href="#&#x7EC4;&#x6210;&#x90E8;&#x5206;" class="headerlink" title="&#x7EC4;&#x6210;&#x90E8;&#x5206;"></a>&#x7EC4;&#x6210;&#x90E8;&#x5206;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用途"><span class="nav-number">2.3.</span> <span class="nav-text"><a href="#&#x7528;&#x9014;" class="headerlink" title="&#x7528;&#x9014;"></a>&#x7528;&#x9014;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现方式与数学原理"><span class="nav-number">2.4.</span> <span class="nav-text"><a href="#&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;&#x4E0E;&#x6570;&#x5B66;&#x539F;&#x7406;" class="headerlink" title="&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;&#x4E0E;&#x6570;&#x5B66;&#x539F;&#x7406;"></a>&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;&#x4E0E;&#x6570;&#x5B66;&#x539F;&#x7406;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#举例：模拟高斯分布"><span class="nav-number">2.5.</span> <span class="nav-text"><a href="#&#x4E3E;&#x4F8B;&#xFF1A;&#x6A21;&#x62DF;&#x9AD8;&#x65AF;&#x5206;&#x5E03;" class="headerlink" title="&#x4E3E;&#x4F8B;&#xFF1A;&#x6A21;&#x62DF;&#x9AD8;&#x65AF;&#x5206;&#x5E03;"></a>&#x4E3E;&#x4F8B;&#xFF1A;&#x6A21;&#x62DF;&#x9AD8;&#x65AF;&#x5206;&#x5E03;</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简单的生成对抗网络"><span class="nav-number">3.</span> <span class="nav-text"><a href="#&#x7B80;&#x5355;&#x7684;&#x751F;&#x6210;&#x5BF9;&#x6297;&#x7F51;&#x7EDC;" class="headerlink" title="&#x7B80;&#x5355;&#x7684;&#x751F;&#x6210;&#x5BF9;&#x6297;&#x7F51;&#x7EDC;"></a>&#x7B80;&#x5355;&#x7684;&#x751F;&#x6210;&#x5BF9;&#x6297;&#x7F51;&#x7EDC;</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单GAN模型结构"><span class="nav-number">3.1.</span> <span class="nav-text"><a href="#&#x7B80;&#x5355;GAN&#x6A21;&#x578B;&#x7ED3;&#x6784;" class="headerlink" title="&#x7B80;&#x5355;GAN&#x6A21;&#x578B;&#x7ED3;&#x6784;"></a>&#x7B80;&#x5355;GAN&#x6A21;&#x578B;&#x7ED3;&#x6784;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单GAN模型效果"><span class="nav-number">3.2.</span> <span class="nav-text"><a href="#&#x7B80;&#x5355;GAN&#x6A21;&#x578B;&#x6548;&#x679C;" class="headerlink" title="&#x7B80;&#x5355;GAN&#x6A21;&#x578B;&#x6548;&#x679C;"></a>&#x7B80;&#x5355;GAN&#x6A21;&#x578B;&#x6548;&#x679C;</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#深度生成对抗网络"><span class="nav-number">4.</span> <span class="nav-text"><a href="#&#x6DF1;&#x5EA6;&#x751F;&#x6210;&#x5BF9;&#x6297;&#x7F51;&#x7EDC;" class="headerlink" title="&#x6DF1;&#x5EA6;&#x751F;&#x6210;&#x5BF9;&#x6297;&#x7F51;&#x7EDC;"></a>&#x6DF1;&#x5EA6;&#x751F;&#x6210;&#x5BF9;&#x6297;&#x7F51;&#x7EDC;</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DCGAN模型框架"><span class="nav-number">4.1.</span> <span class="nav-text"><a href="#DCGAN&#x6A21;&#x578B;&#x6846;&#x67B6;" class="headerlink" title="DCGAN&#x6A21;&#x578B;&#x6846;&#x67B6;"></a>DCGAN&#x6A21;&#x578B;&#x6846;&#x67B6;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DCGAN模型实现时的技术细节"><span class="nav-number">4.2.</span> <span class="nav-text"><a href="#DCGAN&#x6A21;&#x578B;&#x5B9E;&#x73B0;&#x65F6;&#x7684;&#x6280;&#x672F;&#x7EC6;&#x8282;" class="headerlink" title="DCGAN&#x6A21;&#x578B;&#x5B9E;&#x73B0;&#x65F6;&#x7684;&#x6280;&#x672F;&#x7EC6;&#x8282;"></a>DCGAN&#x6A21;&#x578B;&#x5B9E;&#x73B0;&#x65F6;&#x7684;&#x6280;&#x672F;&#x7EC6;&#x8282;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启发"><span class="nav-number">4.3.</span> <span class="nav-text"><a href="#&#x542F;&#x53D1;" class="headerlink" title="&#x542F;&#x53D1;"></a>&#x542F;&#x53D1;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DCGAN模型中随机初始化的噪声Z对生成结果的影响"><span class="nav-number">4.4.</span> <span class="nav-text"><a href="#DCGAN&#x6A21;&#x578B;&#x4E2D;&#x968F;&#x673A;&#x521D;&#x59CB;&#x5316;&#x7684;&#x566A;&#x58F0;Z&#x5BF9;&#x751F;&#x6210;&#x7ED3;&#x679C;&#x7684;&#x5F71;&#x54CD;" class="headerlink" title="DCGAN&#x6A21;&#x578B;&#x4E2D;&#x968F;&#x673A;&#x521D;&#x59CB;&#x5316;&#x7684;&#x566A;&#x58F0;Z&#x5BF9;&#x751F;&#x6210;&#x7ED3;&#x679C;&#x7684;&#x5F71;&#x54CD;"></a>DCGAN&#x6A21;&#x578B;&#x4E2D;&#x968F;&#x673A;&#x521D;&#x59CB;&#x5316;&#x7684;&#x566A;&#x58F0;Z&#x5BF9;&#x751F;&#x6210;&#x7ED3;&#x679C;&#x7684;&#x5F71;&#x54CD;</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#条件生成对抗网络"><span class="nav-number">5.</span> <span class="nav-text"><a href="#&#x6761;&#x4EF6;&#x751F;&#x6210;&#x5BF9;&#x6297;&#x7F51;&#x7EDC;" class="headerlink" title="&#x6761;&#x4EF6;&#x751F;&#x6210;&#x5BF9;&#x6297;&#x7F51;&#x7EDC;"></a>&#x6761;&#x4EF6;&#x751F;&#x6210;&#x5BF9;&#x6297;&#x7F51;&#x7EDC;</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#条件生成对抗模型-cGAN-模型"><span class="nav-number">5.1.</span> <span class="nav-text"><a href="#&#x6761;&#x4EF6;&#x751F;&#x6210;&#x5BF9;&#x6297;&#x6A21;&#x578B;-cGAN-&#x6A21;&#x578B;" class="headerlink" title="&#x6761;&#x4EF6;&#x751F;&#x6210;&#x5BF9;&#x6297;&#x6A21;&#x578B;(cGAN)&#x6A21;&#x578B;"></a>&#x6761;&#x4EF6;&#x751F;&#x6210;&#x5BF9;&#x6297;&#x6A21;&#x578B;(cGAN)&#x6A21;&#x578B;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#举个例子"><span class="nav-number">5.2.</span> <span class="nav-text"><a href="#&#x4E3E;&#x4E2A;&#x4F8B;&#x5B50;" class="headerlink" title="&#x4E3E;&#x4E2A;&#x4F8B;&#x5B50;"></a>&#x4E3E;&#x4E2A;&#x4F8B;&#x5B50;</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Info-GAN"><span class="nav-number">6.</span> <span class="nav-text"><a href="#Info-GAN" class="headerlink" title="Info GAN"></a>Info GAN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#InfoGAN的基本思想"><span class="nav-number">6.1.</span> <span class="nav-text"><a href="#InfoGAN&#x7684;&#x57FA;&#x672C;&#x601D;&#x60F3;" class="headerlink" title="InfoGAN&#x7684;&#x57FA;&#x672C;&#x601D;&#x60F3;"></a>InfoGAN&#x7684;&#x57FA;&#x672C;&#x601D;&#x60F3;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数学证明："><span class="nav-number">6.2.</span> <span class="nav-text"><a href="#&#x6570;&#x5B66;&#x8BC1;&#x660E;&#xFF1A;" class="headerlink" title="&#x6570;&#x5B66;&#x8BC1;&#x660E;&#xFF1A;"></a>&#x6570;&#x5B66;&#x8BC1;&#x660E;&#xFF1A;</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#W-GAN"><span class="nav-number">7.</span> <span class="nav-text"><a href="#W-GAN" class="headerlink" title="W GAN"></a>W GAN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#W-GAN-简介"><span class="nav-number">7.1.</span> <span class="nav-text"><a href="#W-GAN-&#x7B80;&#x4ECB;" class="headerlink" title="W GAN &#x7B80;&#x4ECB;"></a>W GAN &#x7B80;&#x4ECB;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#贡献"><span class="nav-number">7.2.</span> <span class="nav-text"><a href="#&#x8D21;&#x732E;" class="headerlink" title="&#x8D21;&#x732E;"></a>&#x8D21;&#x732E;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改进"><span class="nav-number">7.3.</span> <span class="nav-text"><a href="#&#x6539;&#x8FDB;" class="headerlink" title="&#x6539;&#x8FDB;"></a>&#x6539;&#x8FDB;</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实例解析：DeepColor"><span class="nav-number">8.</span> <span class="nav-text"><a href="#&#x5B9E;&#x4F8B;&#x89E3;&#x6790;&#xFF1A;DeepColor" class="headerlink" title="&#x5B9E;&#x4F8B;&#x89E3;&#x6790;&#xFF1A;DeepColor"></a>&#x5B9E;&#x4F8B;&#x89E3;&#x6790;&#xFF1A;DeepColor</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Deep-color"><span class="nav-number">8.1.</span> <span class="nav-text"><a href="#Deep-color" class="headerlink" title="Deep color"></a>Deep color</span></a></li></ol></li></ol></div>
             
 
           </div>
