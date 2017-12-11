@@ -98,75 +98,75 @@
 <meta name="keywords" content="-GAN">
 <meta property="og:type" content="article">
 <meta property="og:title" content="生成对抗网络（Generative Adversarial Network）">
-<meta property="og:url" content="http://ZhuChenghao.com/2017/12/11/My-New-Post/index.html">
+<meta property="og:url" content="http://zchgql.com/2017/12/11/My-New-Post/index.html">
 <meta property="og:site_name" content="Zhu Chenghao&#39;s Blog">
 <meta property="og:description" content="生成对抗网络（Generative Adversarial Network）目录： 生成对抗网络介绍  简单的生成对抗网络  深度生成对抗网络  条件生成对抗网络  INFO生成对抗网络  Wasserstein GAN  实例解析：deepcolor   生成对抗网络介绍基本介绍 非监督式学习  神经网络相互博弈  扬·古德费洛2014年提出   组成部分 生成网络：从潜在空间（latent s">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image002.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image004.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image006.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image008.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image010.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image012.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image014.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image015.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image017.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image019.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image021.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image023.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image025.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image027.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image029.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image031.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image033.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image035.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image037.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image039.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image041.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image043.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image045.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image047.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image049.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image051.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image053.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image055.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image057.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image059.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image061.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image063.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image065.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image067.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image069.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image071.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image073.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image075.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image077.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image079.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image081.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image083.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image085.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image087.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image089.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image091.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image093.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image095.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image097.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image099.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image101.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image103.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image105.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image107.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image109.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image111.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image113.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image115.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image117.png">
-<meta property="og:image" content="http://zhuchenghao.com/img/01/clip_image119.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image002.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image004.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image006.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image008.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image010.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image012.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image014.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image015.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image017.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image019.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image021.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image023.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image025.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image027.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image029.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image031.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image033.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image035.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image037.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image039.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image041.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image043.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image045.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image047.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image049.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image051.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image053.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image055.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image057.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image059.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image061.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image063.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image065.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image067.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image069.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image071.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image073.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image075.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image077.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image079.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image081.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image083.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image085.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image087.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image089.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image091.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image093.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image095.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image097.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image099.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image101.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image103.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image105.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image107.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image109.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image111.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image113.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image115.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image117.png">
+<meta property="og:image" content="http://zchgql.com/img/01/clip_image119.png">
 <meta property="og:updated_time" content="2017-12-11T07:32:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="生成对抗网络（Generative Adversarial Network）">
 <meta name="twitter:description" content="生成对抗网络（Generative Adversarial Network）目录： 生成对抗网络介绍  简单的生成对抗网络  深度生成对抗网络  条件生成对抗网络  INFO生成对抗网络  Wasserstein GAN  实例解析：deepcolor   生成对抗网络介绍基本介绍 非监督式学习  神经网络相互博弈  扬·古德费洛2014年提出   组成部分 生成网络：从潜在空间（latent s">
-<meta name="twitter:image" content="http://zhuchenghao.com/img/01/clip_image002.png">
+<meta name="twitter:image" content="http://zchgql.com/img/01/clip_image002.png">
 
 
 
@@ -195,7 +195,7 @@
 
 
 
-  <link rel="canonical" href="http://ZhuChenghao.com/2017/12/11/My-New-Post/"/>
+  <link rel="canonical" href="http://zchgql.com/2017/12/11/My-New-Post/"/>
 
 
 
@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://ZhuChenghao.com/2017/12/11/My-New-Post/">
+    <link itemprop="mainEntityOfPage" href="http://zchgql.com/2017/12/11/My-New-Post/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zhu Chenghao">
