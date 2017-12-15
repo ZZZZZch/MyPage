@@ -412,8 +412,7 @@
 <p>​</p>
 <p>现在考虑一个视频段输入，其大小为 c∗l∗h∗w,其中c为图像通道(一般为3),l为视频序列的长度，h和w分别为视频的宽与高。进行一次kernel size为3∗3∗3,stride为1,padding=True,滤波器个数为K的3D 卷积后，输出的大小为K∗l∗h∗w。池化同理。</p>
 <p>​</p>
-<p>####C3D network 结构</p>
-<p><img src="http://ofltv9hb9.bkt.clouddn.com/image/c3d/c3d.png" alt=""></p>
+<h4 id="C3D-network-结构"><a href="#C3D-network-结构" class="headerlink" title="C3D network 结构"></a>C3D network 结构</h4><p><img src="http://ofltv9hb9.bkt.clouddn.com/image/c3d/c3d.png" alt=""></p>
 <p>基于3D卷积操作，作者设计了如上图所示的C3D network结构。共有8次卷积操作，4次池化操作。其中卷积核的大小均为3∗3∗3，即一次输入16帧图像。</p>
 <p>​</p>
 <h2 id="癌症预测"><a href="#癌症预测" class="headerlink" title="癌症预测"></a>癌症预测</h2><h3 id="结果与问题"><a href="#结果与问题" class="headerlink" title="结果与问题"></a>结果与问题</h3><p>训练好网络后，下一步是让神经网络检测结节并估计其恶化程度。</p>
