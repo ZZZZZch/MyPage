@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="CNN," />
 
 
 
@@ -94,13 +94,26 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Zhu Chenghao&#39;s Blog">
-<meta property="og:url" content="http://zchgql.com/index.html">
+<meta name="description" content="Kaggle 肺癌结节检测（Data Science Bowl 2017）目录 基本信息 数据、预处理、创建训练集 3D卷积神经网络的训练方法和网络结构 癌症预测 资料参考与借鉴  基本信息比赛相关Kaggle网站举办了一场用肺部CT图像进行肺癌检测的比赛Data Science Bowl 2017，提供百万美元奖金池。美国国家癌症研究所为比赛提供了高分辨率的肺部CT图像，在比赛中，参赛者根据给定">
+<meta name="keywords" content="CNN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="肺癌结节检测（Data Science Bowl 2017）">
+<meta property="og:url" content="http://zchgql.com/2017/12/15/Kaggle 肺癌结节检测第二名解析/index.html">
 <meta property="og:site_name" content="Zhu Chenghao&#39;s Blog">
+<meta property="og:description" content="Kaggle 肺癌结节检测（Data Science Bowl 2017）目录 基本信息 数据、预处理、创建训练集 3D卷积神经网络的训练方法和网络结构 癌症预测 资料参考与借鉴  基本信息比赛相关Kaggle网站举办了一场用肺部CT图像进行肺癌检测的比赛Data Science Bowl 2017，提供百万美元奖金池。美国国家癌症研究所为比赛提供了高分辨率的肺部CT图像，在比赛中，参赛者根据给定">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://pic3.zhimg.com/v2-76be917d76e61d72a8f1fb6fdde13809_r.jpg">
+<meta property="og:image" content="https://pic2.zhimg.com/50/v2-28acc32de495d358a29d50528b5d08b4_hd.jpg">
+<meta property="og:image" content="http://img.blog.csdn.net/20170421142155450?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkzMTU4Mg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170423160054858?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkzMTU4Mg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170712171711426?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaGR1eGllanVu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://pic2.zhimg.com/50/v2-94f56212df07f9800d49bf0a369e1696_hd.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/v2-646cd2e4938aedc94d14f60e7f2ea102_r.jpg">
+<meta property="og:updated_time" content="2017-12-15T04:21:51.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Zhu Chenghao&#39;s Blog">
+<meta name="twitter:title" content="肺癌结节检测（Data Science Bowl 2017）">
+<meta name="twitter:description" content="Kaggle 肺癌结节检测（Data Science Bowl 2017）目录 基本信息 数据、预处理、创建训练集 3D卷积神经网络的训练方法和网络结构 癌症预测 资料参考与借鉴  基本信息比赛相关Kaggle网站举办了一场用肺部CT图像进行肺癌检测的比赛Data Science Bowl 2017，提供百万美元奖金池。美国国家癌症研究所为比赛提供了高分辨率的肺部CT图像，在比赛中，参赛者根据给定">
+<meta name="twitter:image" content="https://pic3.zhimg.com/v2-76be917d76e61d72a8f1fb6fdde13809_r.jpg">
 
 
 
@@ -129,13 +142,13 @@
 
 
 
-  <link rel="canonical" href="http://zchgql.com/"/>
+  <link rel="canonical" href="http://zchgql.com/2017/12/15/Kaggle 肺癌结节检测第二名解析/"/>
 
 
 
 
 
-  <title>Zhu Chenghao's Blog</title>
+  <title>肺癌结节检测（Data Science Bowl 2017） | Zhu Chenghao's Blog</title>
   
 
 
@@ -160,9 +173,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-   page-home 
- ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -245,9 +256,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -277,9 +288,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/15/Kaggle 肺癌结节检测第二名解析/" itemprop="url">肺癌结节检测（Data Science Bowl 2017）</a></h1>
+          <h1 class="post-title" itemprop="name headline">肺癌结节检测（Data Science Bowl 2017）</h1>
         
 
         <div class="post-meta">
@@ -329,9 +338,7 @@
       
 
       
-        
-          
-            <h1 id="Kaggle-肺癌结节检测（Data-Science-Bowl-2017）"><a href="#Kaggle-肺癌结节检测（Data-Science-Bowl-2017）" class="headerlink" title="Kaggle 肺癌结节检测（Data Science Bowl 2017）"></a>Kaggle 肺癌结节检测（Data Science Bowl 2017）</h1><h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+        <h1 id="Kaggle-肺癌结节检测（Data-Science-Bowl-2017）"><a href="#Kaggle-肺癌结节检测（Data-Science-Bowl-2017）" class="headerlink" title="Kaggle 肺癌结节检测（Data Science Bowl 2017）"></a>Kaggle 肺癌结节检测（Data Science Bowl 2017）</h1><h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
 <li>基本信息</li>
 <li>数据、预处理、创建训练集</li>
 <li>3D卷积神经网络的训练方法和网络结构</li>
@@ -420,8 +427,6 @@
 <li><a href="https://github.com/juliandewit/kaggle_ndsb2017" target="_blank" rel="noopener">Github 源码</a></li>
 </ol>
 
-          
-        
       
     </div>
     
@@ -436,14 +441,36 @@
 
     <footer class="post-footer">
       
-
+        <div class="post-tags">
+          
+            <a href="/tags/CNN/" rel="tag"># CNN</a>
+          
+        </div>
       
 
       
+      
+      
 
       
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/11/My-New-Post/" rel="next" title="生成对抗网络（Generative Adversarial Network）">
+                <i class="fa fa-chevron-left"></i> 生成对抗网络（Generative Adversarial Network）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
       
-        <div class="post-eof"></div>
+
+      
       
     </footer>
   </div>
@@ -453,14 +480,11 @@
   </article>
 
 
-    
-  </section>
 
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
-
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -468,6 +492,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -488,8 +516,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -542,6 +579,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Kaggle-肺癌结节检测（Data-Science-Bowl-2017）"><span class="nav-number">1.</span> <span class="nav-text"><a href="#Kaggle-&#x80BA;&#x764C;&#x7ED3;&#x8282;&#x68C0;&#x6D4B;&#xFF08;Data-Science-Bowl-2017&#xFF09;" class="headerlink" title="Kaggle &#x80BA;&#x764C;&#x7ED3;&#x8282;&#x68C0;&#x6D4B;&#xFF08;Data Science Bowl 2017&#xFF09;"></a>Kaggle &#x80BA;&#x764C;&#x7ED3;&#x8282;&#x68C0;&#x6D4B;&#xFF08;Data Science Bowl 2017&#xFF09;</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目录"><span class="nav-number">1.1.</span> <span class="nav-text"><a href="#&#x76EE;&#x5F55;" class="headerlink" title="&#x76EE;&#x5F55;"></a>&#x76EE;&#x5F55;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本信息"><span class="nav-number">1.2.</span> <span class="nav-text"><a href="#&#x57FA;&#x672C;&#x4FE1;&#x606F;" class="headerlink" title="&#x57FA;&#x672C;&#x4FE1;&#x606F;"></a>&#x57FA;&#x672C;&#x4FE1;&#x606F;</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#比赛相关"><span class="nav-number">1.2.1.</span> <span class="nav-text"><a href="#&#x6BD4;&#x8D5B;&#x76F8;&#x5173;" class="headerlink" title="&#x6BD4;&#x8D5B;&#x76F8;&#x5173;"></a>&#x6BD4;&#x8D5B;&#x76F8;&#x5173;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初步计划"><span class="nav-number">1.2.2.</span> <span class="nav-text"><a href="#&#x521D;&#x6B65;&#x8BA1;&#x5212;" class="headerlink" title="&#x521D;&#x6B65;&#x8BA1;&#x5212;"></a>&#x521D;&#x6B65;&#x8BA1;&#x5212;</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据、预处理、创建训练集"><span class="nav-number">1.3.</span> <span class="nav-text"><a href="#&#x6570;&#x636E;&#x3001;&#x9884;&#x5904;&#x7406;&#x3001;&#x521B;&#x5EFA;&#x8BAD;&#x7EC3;&#x96C6;" class="headerlink" title="&#x6570;&#x636E;&#x3001;&#x9884;&#x5904;&#x7406;&#x3001;&#x521B;&#x5EFA;&#x8BAD;&#x7EC3;&#x96C6;"></a>&#x6570;&#x636E;&#x3001;&#x9884;&#x5904;&#x7406;&#x3001;&#x521B;&#x5EFA;&#x8BAD;&#x7EC3;&#x96C6;</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#处理图像"><span class="nav-number">1.3.1.</span> <span class="nav-text"><a href="#&#x5904;&#x7406;&#x56FE;&#x50CF;" class="headerlink" title="&#x5904;&#x7406;&#x56FE;&#x50CF;"></a>&#x5904;&#x7406;&#x56FE;&#x50CF;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据集"><span class="nav-number">1.3.2.</span> <span class="nav-text"><a href="#&#x6570;&#x636E;&#x96C6;" class="headerlink" title="&#x6570;&#x636E;&#x96C6;"></a>&#x6570;&#x636E;&#x96C6;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UNet简介"><span class="nav-number">1.3.3.</span> <span class="nav-text"><a href="#UNet&#x7B80;&#x4ECB;" class="headerlink" title="UNet&#x7B80;&#x4ECB;"></a><strong>UNet&#x7B80;&#x4ECB;</strong></span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#语义分割"><span class="nav-number">1.3.3.1.</span> <span class="nav-text"><a href="#&#x8BED;&#x4E49;&#x5206;&#x5272;" class="headerlink" title="&#x8BED;&#x4E49;&#x5206;&#x5272;"></a><em>&#x8BED;&#x4E49;&#x5206;&#x5272;</em></span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FCN与CNN"><span class="nav-number">1.3.3.2.</span> <span class="nav-text"><a href="#FCN&#x4E0E;CNN" class="headerlink" title="FCN&#x4E0E;CNN"></a><em>FCN&#x4E0E;CNN</em></span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3D卷积神经网络的训练方法和网络结构"><span class="nav-number">1.4.</span> <span class="nav-text"><a href="#3D&#x5377;&#x79EF;&#x795E;&#x7ECF;&#x7F51;&#x7EDC;&#x7684;&#x8BAD;&#x7EC3;&#x65B9;&#x6CD5;&#x548C;&#x7F51;&#x7EDC;&#x7ED3;&#x6784;" class="headerlink" title="3D&#x5377;&#x79EF;&#x795E;&#x7ECF;&#x7F51;&#x7EDC;&#x7684;&#x8BAD;&#x7EC3;&#x65B9;&#x6CD5;&#x548C;&#x7F51;&#x7EDC;&#x7ED3;&#x6784;"></a>3D&#x5377;&#x79EF;&#x795E;&#x7ECF;&#x7F51;&#x7EDC;&#x7684;&#x8BAD;&#x7EC3;&#x65B9;&#x6CD5;&#x548C;&#x7F51;&#x7EDC;&#x7ED3;&#x6784;</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础结节检测器样本增强"><span class="nav-number">1.4.1.</span> <span class="nav-text"><a href="#&#x57FA;&#x7840;&#x7ED3;&#x8282;&#x68C0;&#x6D4B;&#x5668;&#x6837;&#x672C;&#x589E;&#x5F3A;" class="headerlink" title="&#x57FA;&#x7840;&#x7ED3;&#x8282;&#x68C0;&#x6D4B;&#x5668;&#x6837;&#x672C;&#x589E;&#x5F3A;"></a>&#x57FA;&#x7840;&#x7ED3;&#x8282;&#x68C0;&#x6D4B;&#x5668;&#x6837;&#x672C;&#x589E;&#x5F3A;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#恶化程度回归模型"><span class="nav-number">1.4.2.</span> <span class="nav-text"><a href="#&#x6076;&#x5316;&#x7A0B;&#x5EA6;&#x56DE;&#x5F52;&#x6A21;&#x578B;" class="headerlink" title="&#x6076;&#x5316;&#x7A0B;&#x5EA6;&#x56DE;&#x5F52;&#x6A21;&#x578B;"></a>&#x6076;&#x5316;&#x7A0B;&#x5EA6;&#x56DE;&#x5F52;&#x6A21;&#x578B;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络使用"><span class="nav-number">1.4.3.</span> <span class="nav-text"><a href="#&#x7F51;&#x7EDC;&#x4F7F;&#x7528;" class="headerlink" title="&#x7F51;&#x7EDC;&#x4F7F;&#x7528;"></a>&#x7F51;&#x7EDC;&#x4F7F;&#x7528;</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#癌症预测"><span class="nav-number">1.5.</span> <span class="nav-text"><a href="#&#x764C;&#x75C7;&#x9884;&#x6D4B;" class="headerlink" title="&#x764C;&#x75C7;&#x9884;&#x6D4B;"></a>&#x764C;&#x75C7;&#x9884;&#x6D4B;</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结果与问题"><span class="nav-number">1.5.1.</span> <span class="nav-text"><a href="#&#x7ED3;&#x679C;&#x4E0E;&#x95EE;&#x9898;" class="headerlink" title="&#x7ED3;&#x679C;&#x4E0E;&#x95EE;&#x9898;"></a>&#x7ED3;&#x679C;&#x4E0E;&#x95EE;&#x9898;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方式"><span class="nav-number">1.5.2.</span> <span class="nav-text"><a href="#&#x89E3;&#x51B3;&#x65B9;&#x5F0F;" class="headerlink" title="&#x89E3;&#x51B3;&#x65B9;&#x5F0F;"></a>&#x89E3;&#x51B3;&#x65B9;&#x5F0F;</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资料参考与借鉴"><span class="nav-number">1.6.</span> <span class="nav-text"><a href="#&#x8D44;&#x6599;&#x53C2;&#x8003;&#x4E0E;&#x501F;&#x9274;" class="headerlink" title="&#x8D44;&#x6599;&#x53C2;&#x8003;&#x4E0E;&#x501F;&#x9274;"></a>&#x8D44;&#x6599;&#x53C2;&#x8003;&#x4E0E;&#x501F;&#x9274;</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -655,10 +708,10 @@
   
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
 
-  
+
 
   
 
