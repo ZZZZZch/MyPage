@@ -403,6 +403,18 @@
 <h3 id="网络使用"><a href="#网络使用" class="headerlink" title="网络使用"></a>网络使用</h3><p>神经网络的结构上花费的时间相对较少，因为已经有很多优秀网络可供参考。刚开始我使用了一些简单的VGG网络和Resnet网络的相似结构，但是它们的性能大致相同。然后我尝试用一个预训练好的C3D网络，原有的网络权重根本没有帮助，但直接初始化权重后，这种网络结构的效果很好。基于C3D网络进行若干次调整后，我得到最终的分类评估网络。</p>
 <p><img src="https://pic2.zhimg.com/50/v2-94f56212df07f9800d49bf0a369e1696_hd.jpg" alt=""></p>
 <p>​</p>
+<h3 id="3D卷积神经网络简介"><a href="#3D卷积神经网络简介" class="headerlink" title="3D卷积神经网络简介"></a>3D卷积神经网络简介</h3><h4 id="提出背景"><a href="#提出背景" class="headerlink" title="提出背景"></a>提出背景</h4><p>基于视频分析的问题，2D convolution不能很好得捕获时序上的信息。因此3D convolution就被提出来了。</p>
+<p>​</p>
+<h4 id="C3D-network"><a href="#C3D-network" class="headerlink" title="C3D network"></a>C3D network</h4><p>C3D network是作为一个通用的网络提出的，文章中将其用于行为识别，场景识别，视频相似度分析等领域。</p>
+<p>​</p>
+<h4 id="2D-与-3D-卷积操作"><a href="#2D-与-3D-卷积操作" class="headerlink" title="2D 与 3D 卷积操作"></a>2D 与 3D 卷积操作</h4><p><img src="http://ofltv9hb9.bkt.clouddn.com/image/c3d/2d3dconv.png" alt=""></p>
+<p>a)和b)分别为2D卷积用于单通道图像和多通道图像的情况（此处多通道图像可以指同一张图片的3个颜色通道，也指多张堆叠在一起的图片，即一小段视频），对于一个滤波器，输出为一张二维的特征图，多通道的信息被完全压缩了。而c)中的3D卷积的输出仍然为3D的特征图。</p>
+<p>​</p>
+<p>现在考虑一个视频段输入，其大小为 c∗l∗h∗w,其中c为图像通道(一般为3),l为视频序列的长度，h和w分别为视频的宽与高。进行一次kernel size为3∗3∗3,stride为1,padding=True,滤波器个数为K的3D 卷积后，输出的大小为K∗l∗h∗w。池化同理。</p>
+<p>​</p>
+<p>####C3D network 结构</p>
+<p><img src="http://ofltv9hb9.bkt.clouddn.com/image/c3d/c3d.png" alt=""></p>
+<p>基于3D卷积操作，作者设计了如上图所示的C3D network结构。共有8次卷积操作，4次池化操作。其中卷积核的大小均为3∗3∗3，即一次输入16帧图像。</p>
 <p>​</p>
 <h2 id="癌症预测"><a href="#癌症预测" class="headerlink" title="癌症预测"></a>癌症预测</h2><h3 id="结果与问题"><a href="#结果与问题" class="headerlink" title="结果与问题"></a>结果与问题</h3><p>训练好网络后，下一步是让神经网络检测结节并估计其恶化程度。</p>
 </li>
