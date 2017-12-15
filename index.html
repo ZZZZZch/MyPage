@@ -331,7 +331,7 @@
       
         
           
-            <h1 id="Kaggle-肺癌结节检测（Data-Science-Bowl-2017）"><a href="#Kaggle-肺癌结节检测（Data-Science-Bowl-2017）" class="headerlink" title="Kaggle 肺癌结节检测（Data Science Bowl 2017）"></a>Kaggle 肺癌结节检测（Data Science Bowl 2017）</h1><h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+            <h1 id="Kaggle-肺癌结节检测（Data-Science-Bowl-2017）第二名解析"><a href="#Kaggle-肺癌结节检测（Data-Science-Bowl-2017）第二名解析" class="headerlink" title="Kaggle 肺癌结节检测（Data Science Bowl 2017）第二名解析"></a>Kaggle 肺癌结节检测（Data Science Bowl 2017）第二名解析</h1><h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
 <li>基本信息</li>
 <li>数据、预处理、创建训练集</li>
 <li>3D卷积神经网络的训练方法和网络结构</li>
@@ -425,10 +425,58 @@
 <p>在缩放1x的左图中，没有很好地检测到大结节；但是在2x放大的右图时，效果较好。矩形的大小表示检测到的恶性肿瘤。</p>
 </li>
 </ul>
-<h2 id="资料参考与借鉴"><a href="#资料参考与借鉴" class="headerlink" title="资料参考与借鉴"></a>资料参考与借鉴</h2><ol>
-<li><a href="https://zhuanlan.zhihu.com/p/26767213" target="_blank" rel="noopener">Kaggle百万美元大赛优胜者：用CNN识别CT图像检测肺癌</a></li>
-<li><a href="http://blog.csdn.net/u012931582/article/details/70314859" target="_blank" rel="noopener">语义分割(semantic segmentation) 常用神经网络介绍对比-FCN SegNet U-net DeconvNet</a></li>
-<li><a href="https://github.com/juliandewit/kaggle_ndsb2017" target="_blank" rel="noopener">Github 源码</a></li>
+<h1 id="Kaggle-肺癌结节检测（Data-Science-Bowl-2017）微软团队解析"><a href="#Kaggle-肺癌结节检测（Data-Science-Bowl-2017）微软团队解析" class="headerlink" title="Kaggle 肺癌结节检测（Data Science Bowl 2017）微软团队解析"></a>Kaggle 肺癌结节检测（Data Science Bowl 2017）微软团队解析</h1><h2 id="基本信息-1"><a href="#基本信息-1" class="headerlink" title="基本信息"></a>基本信息</h2><p>微软的 Miguel Fierro, Ye Xing, Tao Wu 等人在 2017 年 1 月 Kaggle 上的“数据科学肺癌检测竞赛”里，在60 分钟内，利用已训练好的卷积神经网络 ResNet-157 提取 CT 图像的特征，并训练提升树（boosted tree），以识别肺癌 CT 影像是癌症阴性或阳性。他们获得了不错的成绩——1 月 19 日之前排名位前 10%，2 月 7 日之前，居前 20%（其实挺一般的）。</p>
+<p>##使用工具</p>
+<ol>
+<li>特征提取：已训练好的卷积神经网络——一个用 CNTK 开发的 152 层 ResNet 模型，用 ImageNet 的图像数据集进行的训练；</li>
+<li>图像分类：LightGBM 灰度提升框架；</li>
+<li>带 GPU 加速的 Azure 虚机；</li>
+</ol>
+<p><em>个人感觉最normal的方法吧</em>，谁让kaggle这个判断只是否具有癌症。</p>
+<h4 id="LightGBM"><a href="#LightGBM" class="headerlink" title="LightGBM"></a>LightGBM</h4><p>LightGBM是微软DMTK框架的一部分，将灰度提升树用于分布式集群上，以达到更快的速度，而且随着节点数增加，可以成比例地提高计算性能。<a href="https://medium.com/implodinggradients/benchmarking-lightgbm-how-fast-is-lightgbm-vs-xgboost-15d224568031" target="_blank" rel="noopener">据好事者测，比XGBoost快10倍，内存使用稍微少些</a>。作为微软AI的两大利器，<a href="https://www.dmtk.io/" target="_blank" rel="noopener">DMTK（Distributed Machine Learning Toolkit）</a>主要优势是分布式，而非深度学习。<a href="http://cntk.ai/" target="_blank" rel="noopener">CNTK</a>的优势在于深度学习，所以这两种常常一起用。</p>
+<h2 id="技术细节"><a href="#技术细节" class="headerlink" title="技术细节"></a>技术细节</h2><ul>
+<li>像 ImageNet 的 RBG 样本那样，裁切到 224x224 大小，三张一组。分成 K 批输入前面提到的已训练的神经网络，计算到“pentimate layer”为止。</li>
+<li>去掉最后的pooling 和 softmax 层，设置penultimate layer，作为输出及分类器输入。</li>
+<li>LightGBM分类器（实验时候尝试的，之后换成了ResNet）</li>
+</ul>
+<p><img src="https://res.infoq.com/articles/resnet-azure-gpu/zh/resources/25.png" alt=""></p>
+<h1 id="阿里天池肺部结节智能检测"><a href="#阿里天池肺部结节智能检测" class="headerlink" title="阿里天池肺部结节智能检测"></a>阿里天池肺部结节智能检测</h1><h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><ul>
+<li>肺癌-世界死亡率最高的癌症</li>
+<li>CT 影像-肺癌检测最直接有效的工具</li>
+<li>肺结节-肺癌的早期临床表现</li>
+<li>肺结节检测-肺癌检测中最重要的环节</li>
+<li>医生使用逐层观察的阅片方式</li>
+<li>3D检测</li>
+<li>结合医学知识</li>
+</ul>
+<p><img src="/img/02/1.png" alt="img"></p>
+<p><img src="/img/02/2.png" alt="img"></p>
+<p><img src="/img/02/3.png" alt="img"></p>
+<h2 id="相关比赛介绍"><a href="#相关比赛介绍" class="headerlink" title="相关比赛介绍"></a>相关比赛介绍</h2><h3 id="LUNA2016"><a href="#LUNA2016" class="headerlink" title="LUNA2016"></a>LUNA2016</h3><ul>
+<li>888例CT图像</li>
+<li>结节检测与良恶性判别</li>
+<li>需提交结节坐标与概率</li>
+<li>FROC、十折交叉验证作为评价指标</li>
+</ul>
+<h3 id="LUNA2016中作者使用的方法"><a href="#LUNA2016中作者使用的方法" class="headerlink" title="LUNA2016中作者使用的方法"></a>LUNA2016中作者使用的方法</h3><p><img src="/img/02/4.png" alt="img"></p>
+<ul>
+<li>Faster—    RCNN逐层扫描，连续三个图作为RGB三个通道，VGG-16</li>
+<li>Feature map增大——反卷积</li>
+<li>anchor大小调整</li>
+<li>设计三维NMS（极大值抑制）方案合并二维图像</li>
+<li>最后 利用3D VGG网络 进行分类</li>
+<li>第一名</li>
+</ul>
+<h1 id="资料参考与借鉴"><a href="#资料参考与借鉴" class="headerlink" title="资料参考与借鉴"></a>资料参考与借鉴</h1><ol>
+<li><p><a href="https://zhuanlan.zhihu.com/p/26767213" target="_blank" rel="noopener">Kaggle百万美元大赛优胜者：用CNN识别CT图像检测肺癌</a></p>
+</li>
+<li><p><a href="http://blog.csdn.net/u012931582/article/details/70314859" target="_blank" rel="noopener">语义分割(semantic segmentation) 常用神经网络介绍对比-FCN SegNet U-net DeconvNet</a></p>
+</li>
+<li><p><a href="https://github.com/juliandewit/kaggle_ndsb2017" target="_blank" rel="noopener">Github 源码</a></p>
+</li>
+<li><p><a href="http://www.10tiao.com/html/157/201705/2653162413/1.html" target="_blank" rel="noopener">一篇文章掌握Kaggle竞赛中的基于ResNet和Azure GPU加速的肺癌CT图像识别</a></p>
+<p>​</p>
+</li>
 </ol>
 
           
