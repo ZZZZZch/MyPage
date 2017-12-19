@@ -401,7 +401,7 @@
 <h1 id="候选区域（Region-Proposal）"><a href="#候选区域（Region-Proposal）" class="headerlink" title="候选区域（Region Proposal）"></a>候选区域（Region Proposal）</h1><p>非常具有影响力的研究，之后可能会单独写博文</p>
 <h2 id="R-CNN"><a href="#R-CNN" class="headerlink" title="R-CNN"></a>R-CNN</h2><p>克服了传统滑动窗口在没有必要检测区域浪费时间的问题，只选择某些window。</p>
 <p>思想是运行图像分割技术，获得色块，然后在不同色块上运行CNN。</p>
-<p><img src="/img/03/24.jpeg" alt=""></p>
+<p><img src="/img/03/25.jpeg" alt=""></p>
 <h2 id="R-CNN演变史"><a href="#R-CNN演变史" class="headerlink" title="R-CNN演变史"></a>R-CNN演变史</h2><ul>
 <li><p>R-CNN</p>
 <p>用某些算法获得候选区域，然后对每个候选区域跑一下分类器，每个区域输出一个标签，并输出一个边界框。R-CNN并不会完全信任这个边界框，它自己也会输出一个边界框。获得更加精确的结果。</p>
