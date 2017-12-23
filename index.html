@@ -203,7 +203,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -213,7 +213,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -289,7 +289,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-23T12:03:09+08:00">
                 2017-12-23
@@ -332,16 +332,16 @@
         
           
             <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>SURF 是一种兴趣点检测及描述子算法。可以说是对SIFT算法的加强版。是用来实现尺度不变性特征点的检测与匹配任务的，SURF算法首先利用Hessian矩阵确定候选点，然后进行NMS（非极大值抑制）初步确定特征点，再通过确定特征点主方向，综合构造SURF特征点描述算子从而进行图像特征抽取。</p>
-<h1 id="SURF方法的具体实现"><a href="#SURF方法的具体实现" class="headerlink" title="SURF方法的具体实现"></a>SURF方法的具体实现</h1><h2 id="Hessian矩阵简介"><a href="#Hessian矩阵简介" class="headerlink" title="Hessian矩阵简介"></a>Hessian矩阵简介</h2><p>在数学中，<strong>海森矩阵</strong>（Hessian matrix 或 Hessian）是一个多变量实值函数的二阶偏导数组成的方块矩阵，描述了函数的局部曲率。假设有一实数函数<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9ae30a831179af233ad961a841950332cad6146a" alt="">如果<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/132e57acb643253e7810ee9702d9581f159a1c61" alt="f">所有的二阶偏导数都存在，那么 <img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/132e57acb643253e7810ee9702d9581f159a1c61" alt="f"> 的海森矩阵的第 <img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/53fcc7b57da64979c370eb150eb5a61a625a08e8" alt="">-项即：</p>
+<h1 id="SURF方法的具体实现"><a href="#SURF方法的具体实现" class="headerlink" title="SURF方法的具体实现"></a>SURF方法的具体实现</h1><h2 id="Hessian矩阵简介"><a href="#Hessian矩阵简介" class="headerlink" title="Hessian矩阵简介"></a>Hessian矩阵简介</h2><p>在数学中，<strong>海森矩阵</strong>（Hessian matrix 或 Hessian）是一个多变量实值函数的二阶偏导数组成的方块矩阵，描述了函数的局部曲率。假设有一实数函数f(x1, ,x2, x3, ….xn)，如果 f 所有的二阶偏导数都存在，那么  f  的海森矩阵的第 ij 项即：</p>
 <p><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/376f63ba327a32b89317226051808ea857992cad" alt=""></p>
-<p>其中<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7d750ee2fffa2be890b9626b672037f0104cfe7a" alt="">，即</p>
+<p>其中x = (x1, x2, x3, x4, …,xn )，即</p>
 <p><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/389411defb8c9662a366a1d87c25c197c1c56dc4" alt=""></p>
-<p>给定二阶导数连续的映射<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a1c262f451d196f94214e2b8856b462c2d209306" alt="">，海森矩阵的行列式，可用于分辨<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/132e57acb643253e7810ee9702d9581f159a1c61" alt="f">的临界点是属于鞍点还是极值点。</p>
-<p>对于<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/132e57acb643253e7810ee9702d9581f159a1c61" alt="f">的临界点<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/29c296094af9a1c665425debeac5eaab99a37a04" alt="(x_{0},y_{0})">一点，有<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/cff30491b15467e68444e86538651370bd571e0d" alt="{\frac  {\partial f(x_{0},y_{0})}{\partial x}}={\frac  {\partial f(x_{0},y_{0})}{\partial y}}=0">，然而凭一阶导数不能判断它是鞍点、局部极大点还是局部极小点。海森矩阵可能解答这个问题。</p>
+<p>海森矩阵的行列式，可用于分辨 f 的临界点是属于鞍点还是极值点。</p>
+<p>对于 f 的临界点 (x0, y0) 一点，有<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/cff30491b15467e68444e86538651370bd571e0d" alt="{\frac  {\partial f(x_{0},y_{0})}{\partial x}}={\frac  {\partial f(x_{0},y_{0})}{\partial y}}=0">，然而凭一阶导数不能判断它是鞍点、局部极大点还是局部极小点。海森矩阵可能解答这个问题。</p>
 <p><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/31f604c36c3f1e37efe8287d7848c797b09484fd" alt=""></p>
 <ul>
-<li>H &gt; 0：若<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/df873e9e76d5a3c14f76660e3bc9faa2d14e0aee" alt="{\frac  {\partial ^{2}f}{\partial x^{2}}}&gt;0">，则<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/29c296094af9a1c665425debeac5eaab99a37a04" alt="(x_{0},y_{0})">是局部极小点；若<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7b29b1c5e99c1d6836ca2246a77414ec32a973e8" alt="{\frac  {\partial ^{2}f}{\partial x^{2}}}&lt;0">，则<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/29c296094af9a1c665425debeac5eaab99a37a04" alt="(x_{0},y_{0})">是局部极大点。</li>
-<li>H &lt; 0：<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/29c296094af9a1c665425debeac5eaab99a37a04" alt="(x_{0},y_{0})">是鞍点。</li>
+<li>H &gt; 0：若<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/df873e9e76d5a3c14f76660e3bc9faa2d14e0aee" alt="{\frac  {\partial ^{2}f}{\partial x^{2}}}&gt;0">，则 (x0, y0) 是局部极小点；若<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7b29b1c5e99c1d6836ca2246a77414ec32a973e8" alt="{\frac  {\partial ^{2}f}{\partial x^{2}}}&lt;0">，则 (x0, y0) 是局部极大点。</li>
+<li>H &lt; 0：(x0, y0) 是鞍点。</li>
 <li>H = 0：二阶导数无法判断该临界点的性质，得从更高阶的导数以泰勒公式考虑。</li>
 </ul>
 <h2 id="SURF中Hessian矩阵的构建"><a href="#SURF中Hessian矩阵的构建" class="headerlink" title="SURF中Hessian矩阵的构建"></a>SURF中Hessian矩阵的构建</h2><p>我们假设一个函数f(x, y)，那么图像中像素点的Hessian矩阵我们表示为：</p>
@@ -483,7 +483,7 @@
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
                 <span class="site-state-item-count">4</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
@@ -496,7 +496,7 @@
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">4</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-name">Tags</span>
               
             </div>
           
@@ -546,7 +546,7 @@
 
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
