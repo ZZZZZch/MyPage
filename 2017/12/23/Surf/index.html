@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="OPENCV," />
 
 
 
@@ -94,13 +94,53 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Zhu Chenghao&#39;s Blog">
-<meta property="og:url" content="http://zchgql.com/index.html">
+<meta name="description" content="概述SURF 是一种兴趣点检测及描述子算法。可以说是对SIFT算法的加强版。是用来实现尺度不变性特征点的检测与匹配任务的，SURF算法首先利用Hessian矩阵确定候选点，然后进行NMS（非极大值抑制）初步确定特征点，再通过确定特征点主方向，综合构造SURF特征点描述算子从而进行图像特征抽取。 SURF方法的具体实现Hessian矩阵简介在数学中，海森矩阵（Hessian matrix 或 Hes">
+<meta name="keywords" content="OPENCV">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OPENCV-SURF算法简介">
+<meta property="og:url" content="http://zchgql.com/2017/12/23/Surf/index.html">
 <meta property="og:site_name" content="Zhu Chenghao&#39;s Blog">
+<meta property="og:description" content="概述SURF 是一种兴趣点检测及描述子算法。可以说是对SIFT算法的加强版。是用来实现尺度不变性特征点的检测与匹配任务的，SURF算法首先利用Hessian矩阵确定候选点，然后进行NMS（非极大值抑制）初步确定特征点，再通过确定特征点主方向，综合构造SURF特征点描述算子从而进行图像特征抽取。 SURF方法的具体实现Hessian矩阵简介在数学中，海森矩阵（Hessian matrix 或 Hes">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/9ae30a831179af233ad961a841950332cad6146a">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/132e57acb643253e7810ee9702d9581f159a1c61">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/132e57acb643253e7810ee9702d9581f159a1c61">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/53fcc7b57da64979c370eb150eb5a61a625a08e8">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/376f63ba327a32b89317226051808ea857992cad">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/7d750ee2fffa2be890b9626b672037f0104cfe7a">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/389411defb8c9662a366a1d87c25c197c1c56dc4">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/a1c262f451d196f94214e2b8856b462c2d209306">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/132e57acb643253e7810ee9702d9581f159a1c61">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/132e57acb643253e7810ee9702d9581f159a1c61">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/29c296094af9a1c665425debeac5eaab99a37a04">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/cff30491b15467e68444e86538651370bd571e0d">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/31f604c36c3f1e37efe8287d7848c797b09484fd">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/df873e9e76d5a3c14f76660e3bc9faa2d14e0aee">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/29c296094af9a1c665425debeac5eaab99a37a04">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/7b29b1c5e99c1d6836ca2246a77414ec32a973e8">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/29c296094af9a1c665425debeac5eaab99a37a04">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/29c296094af9a1c665425debeac5eaab99a37a04">
+<meta property="og:image" content="http://img.blog.csdn.net/20131127162720250">
+<meta property="og:image" content="http://img.blog.csdn.net/20131127162900312">
+<meta property="og:image" content="http://img.blog.csdn.net/20131127184804390">
+<meta property="og:image" content="http://img.blog.csdn.net/20131127184739281">
+<meta property="og:image" content="http://img.blog.csdn.net/20131127184650203">
+<meta property="og:image" content="http://img.blog.csdn.net/20151028181456547?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="http://img.blog.csdn.net/20160825155743997">
+<meta property="og:image" content="http://img.blog.csdn.net/20131127194541250">
+<meta property="og:image" content="http://img.blog.csdn.net/20151102153457072">
+<meta property="og:image" content="http://img.blog.csdn.net/20151102143538320">
+<meta property="og:image" content="http://img.blog.csdn.net/20131127210424156">
+<meta property="og:image" content="http://img.blog.csdn.net/20151102191407971">
+<meta property="og:image" content="http://img.blog.csdn.net/20151102190801811">
+<meta property="og:image" content="http://img.blog.csdn.net/20131127210454218">
+<meta property="og:image" content="http://img.blog.csdn.net/20131127211200250">
+<meta property="og:image" content="https://wx1.sinaimg.cn/mw690/8974ecb3ly1fmoxobg6kij20hj0dv48y.jpg">
+<meta property="og:updated_time" content="2017-12-23T04:04:06.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Zhu Chenghao&#39;s Blog">
+<meta name="twitter:title" content="OPENCV-SURF算法简介">
+<meta name="twitter:description" content="概述SURF 是一种兴趣点检测及描述子算法。可以说是对SIFT算法的加强版。是用来实现尺度不变性特征点的检测与匹配任务的，SURF算法首先利用Hessian矩阵确定候选点，然后进行NMS（非极大值抑制）初步确定特征点，再通过确定特征点主方向，综合构造SURF特征点描述算子从而进行图像特征抽取。 SURF方法的具体实现Hessian矩阵简介在数学中，海森矩阵（Hessian matrix 或 Hes">
+<meta name="twitter:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/9ae30a831179af233ad961a841950332cad6146a">
 
 
 
@@ -129,13 +169,13 @@
 
 
 
-  <link rel="canonical" href="http://zchgql.com/"/>
+  <link rel="canonical" href="http://zchgql.com/2017/12/23/Surf/"/>
 
 
 
 
 
-  <title>Zhu Chenghao's Blog</title>
+  <title>OPENCV-SURF算法简介 | Zhu Chenghao's Blog</title>
   
 
 
@@ -160,9 +200,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-   page-home 
- ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -245,9 +283,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -277,9 +315,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/23/Surf/" itemprop="url">OPENCV-SURF算法简介</a></h1>
+          <h1 class="post-title" itemprop="name headline">OPENCV-SURF算法简介</h1>
         
 
         <div class="post-meta">
@@ -329,9 +365,7 @@
       
 
       
-        
-          
-            <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>SURF 是一种兴趣点检测及描述子算法。可以说是对SIFT算法的加强版。是用来实现尺度不变性特征点的检测与匹配任务的，SURF算法首先利用Hessian矩阵确定候选点，然后进行NMS（非极大值抑制）初步确定特征点，再通过确定特征点主方向，综合构造SURF特征点描述算子从而进行图像特征抽取。</p>
+        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>SURF 是一种兴趣点检测及描述子算法。可以说是对SIFT算法的加强版。是用来实现尺度不变性特征点的检测与匹配任务的，SURF算法首先利用Hessian矩阵确定候选点，然后进行NMS（非极大值抑制）初步确定特征点，再通过确定特征点主方向，综合构造SURF特征点描述算子从而进行图像特征抽取。</p>
 <h1 id="SURF方法的具体实现"><a href="#SURF方法的具体实现" class="headerlink" title="SURF方法的具体实现"></a>SURF方法的具体实现</h1><h2 id="Hessian矩阵简介"><a href="#Hessian矩阵简介" class="headerlink" title="Hessian矩阵简介"></a>Hessian矩阵简介</h2><p>在数学中，<strong>海森矩阵</strong>（Hessian matrix 或 Hessian）是一个多变量实值函数的二阶偏导数组成的方块矩阵，描述了函数的局部曲率。假设有一实数函数<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9ae30a831179af233ad961a841950332cad6146a" alt="">如果<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/132e57acb643253e7810ee9702d9581f159a1c61" alt="f">所有的二阶偏导数都存在，那么 <img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/132e57acb643253e7810ee9702d9581f159a1c61" alt="f"> 的海森矩阵的第 <img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/53fcc7b57da64979c370eb150eb5a61a625a08e8" alt="">-项即：</p>
 <p><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/376f63ba327a32b89317226051808ea857992cad" alt=""></p>
 <p>其中<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7d750ee2fffa2be890b9626b672037f0104cfe7a" alt="">，即</p>
@@ -398,8 +432,6 @@
 <li>《Speeded-Up Robust Features》Herbert Bay</li>
 </ul>
 
-          
-        
       
     </div>
     
@@ -414,14 +446,36 @@
 
     <footer class="post-footer">
       
-
+        <div class="post-tags">
+          
+            <a href="/tags/OPENCV/" rel="tag"># OPENCV</a>
+          
+        </div>
       
 
       
+      
+      
 
       
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/19/目标定位/" rel="next" title="目标检测">
+                <i class="fa fa-chevron-left"></i> 目标检测
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
       
-        <div class="post-eof"></div>
+
+      
       
     </footer>
   </div>
@@ -431,14 +485,11 @@
   </article>
 
 
-    
-  </section>
 
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
-
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -446,6 +497,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -466,8 +521,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -520,6 +584,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x6982;&#x8FF0;" class="headerlink" title="&#x6982;&#x8FF0;"></a>&#x6982;&#x8FF0;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SURF方法的具体实现"><span class="nav-number">2.</span> <span class="nav-text"><a href="#SURF&#x65B9;&#x6CD5;&#x7684;&#x5177;&#x4F53;&#x5B9E;&#x73B0;" class="headerlink" title="SURF&#x65B9;&#x6CD5;&#x7684;&#x5177;&#x4F53;&#x5B9E;&#x73B0;"></a>SURF&#x65B9;&#x6CD5;&#x7684;&#x5177;&#x4F53;&#x5B9E;&#x73B0;</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hessian矩阵简介"><span class="nav-number">2.1.</span> <span class="nav-text"><a href="#Hessian&#x77E9;&#x9635;&#x7B80;&#x4ECB;" class="headerlink" title="Hessian&#x77E9;&#x9635;&#x7B80;&#x4ECB;"></a>Hessian&#x77E9;&#x9635;&#x7B80;&#x4ECB;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SURF中Hessian矩阵的构建"><span class="nav-number">2.2.</span> <span class="nav-text"><a href="#SURF&#x4E2D;Hessian&#x77E9;&#x9635;&#x7684;&#x6784;&#x5EFA;" class="headerlink" title="SURF&#x4E2D;Hessian&#x77E9;&#x9635;&#x7684;&#x6784;&#x5EFA;"></a>SURF&#x4E2D;Hessian&#x77E9;&#x9635;&#x7684;&#x6784;&#x5EFA;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#积分图"><span class="nav-number">2.3.</span> <span class="nav-text"><a href="#&#x79EF;&#x5206;&#x56FE;" class="headerlink" title="&#x79EF;&#x5206;&#x56FE;"></a>&#x79EF;&#x5206;&#x56FE;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#尺度空间"><span class="nav-number">2.4.</span> <span class="nav-text"><a href="#&#x5C3A;&#x5EA6;&#x7A7A;&#x95F4;" class="headerlink" title="&#x5C3A;&#x5EA6;&#x7A7A;&#x95F4;"></a>&#x5C3A;&#x5EA6;&#x7A7A;&#x95F4;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非极大值抑制"><span class="nav-number">2.5.</span> <span class="nav-text"><a href="#&#x975E;&#x6781;&#x5927;&#x503C;&#x6291;&#x5236;" class="headerlink" title="&#x975E;&#x6781;&#x5927;&#x503C;&#x6291;&#x5236;"></a>&#x975E;&#x6781;&#x5927;&#x503C;&#x6291;&#x5236;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特征点方向特征的确定"><span class="nav-number">2.6.</span> <span class="nav-text"><a href="#&#x7279;&#x5F81;&#x70B9;&#x65B9;&#x5411;&#x7279;&#x5F81;&#x7684;&#x786E;&#x5B9A;" class="headerlink" title="&#x7279;&#x5F81;&#x70B9;&#x65B9;&#x5411;&#x7279;&#x5F81;&#x7684;&#x786E;&#x5B9A;"></a>&#x7279;&#x5F81;&#x70B9;&#x65B9;&#x5411;&#x7279;&#x5F81;&#x7684;&#x786E;&#x5B9A;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构造SURF特征描述算子"><span class="nav-number">2.7.</span> <span class="nav-text"><a href="#&#x6784;&#x9020;SURF&#x7279;&#x5F81;&#x63CF;&#x8FF0;&#x7B97;&#x5B50;" class="headerlink" title="&#x6784;&#x9020;SURF&#x7279;&#x5F81;&#x63CF;&#x8FF0;&#x7B97;&#x5B50;"></a>&#x6784;&#x9020;SURF&#x7279;&#x5F81;&#x63CF;&#x8FF0;&#x7B97;&#x5B50;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OPENCV实现"><span class="nav-number">2.8.</span> <span class="nav-text"><a href="#OPENCV&#x5B9E;&#x73B0;" class="headerlink" title="OPENCV&#x5B9E;&#x73B0;"></a>OPENCV&#x5B9E;&#x73B0;</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Opencv-Python实现"><span class="nav-number">2.8.1.</span> <span class="nav-text"><a href="#Opencv-Python&#x5B9E;&#x73B0;" class="headerlink" title="Opencv-Python&#x5B9E;&#x73B0;"></a>Opencv-Python&#x5B9E;&#x73B0;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实际效果图"><span class="nav-number">2.8.2.</span> <span class="nav-text"><a href="#&#x5B9E;&#x9645;&#x6548;&#x679C;&#x56FE;" class="headerlink" title="&#x5B9E;&#x9645;&#x6548;&#x679C;&#x56FE;"></a>&#x5B9E;&#x9645;&#x6548;&#x679C;&#x56FE;</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x8D44;&#x6599;" class="headerlink" title="&#x53C2;&#x8003;&#x8D44;&#x6599;"></a>&#x53C2;&#x8003;&#x8D44;&#x6599;</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -633,10 +713,10 @@
   
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
 
-  
+
 
   
 
