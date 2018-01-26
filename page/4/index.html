@@ -260,7 +260,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://zchgql.com/2017/12/11/My-New-Post/">
+    <link itemprop="mainEntityOfPage" href="http://zchgql.com/2017/12/15/Kaggle 肺癌结节检测第二名解析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zhu Chenghao">
@@ -279,7 +279,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/12/11/My-New-Post/" itemprop="url">生成对抗网络（Generative Adversarial Network）</a></h1>
+                <a class="post-title-link" href="/2017/12/15/Kaggle 肺癌结节检测第二名解析/" itemprop="url">肺癌结节检测</a></h1>
         
 
         <div class="post-meta">
@@ -291,8 +291,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-11T14:17:36+08:00">
-                2017-12-11
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-15T12:13:09+08:00">
+                2017-12-15
               </time>
             
 
@@ -331,182 +331,199 @@
       
         
           
-            <h1 id="生成对抗网络（Generative-Adversarial-Network）"><a href="#生成对抗网络（Generative-Adversarial-Network）" class="headerlink" title="生成对抗网络（Generative Adversarial Network）"></a>生成对抗网络（Generative Adversarial Network）</h1><h2 id="目录："><a href="#目录：" class="headerlink" title="目录："></a>目录：</h2><ol>
-<li><p>生成对抗网络介绍</p>
+            <h1 id="Kaggle-肺癌结节检测（Data-Science-Bowl-2017）第二名解析"><a href="#Kaggle-肺癌结节检测（Data-Science-Bowl-2017）第二名解析" class="headerlink" title="Kaggle 肺癌结节检测（Data Science Bowl 2017）第二名解析"></a>Kaggle 肺癌结节检测（Data Science Bowl 2017）第二名解析</h1><h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li>基本信息</li>
+<li>数据、预处理、创建训练集</li>
+<li>3D卷积神经网络的训练方法和网络结构</li>
+<li>癌症预测</li>
+<li>资料参考与借鉴</li>
+</ul>
+<h2 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h2><h3 id="比赛相关"><a href="#比赛相关" class="headerlink" title="比赛相关"></a>比赛相关</h3><p>Kaggle网站举办了一场用肺部CT图像进行肺癌检测的比赛Data Science Bowl 2017，提供百万美元奖金池。美国国家癌症研究所为比赛提供了高分辨率的肺部CT图像，在比赛中，参赛者根据给定的一组病人肺部CT三维图像，预测癌症风险。</p>
+<p>Julian de Wit和Daniel Hammack合作完成的解决方案获得了比赛的第二名。Wit最近写了一篇博客来介绍他们的方案。他们通过3D卷积神经网络，来构建结节探测器，预测患癌可能性。Wit在64位的Windows10系统下，结合TensorFlow 0.12.0和Keras库实现该网络模型。</p>
+<h3 id="初步计划"><a href="#初步计划" class="headerlink" title="初步计划"></a>初步计划</h3><ul>
+<li><p>肺部CT图像信噪比大约为1：1000</p>
 </li>
-<li><p>简单的生成对抗网络</p>
+<li><p>标准kaggle数据中只有1300个训练样本及对应的癌症标签</p>
 </li>
-<li><p>深度生成对抗网络</p>
+<li><p>必须找到标签和图像特征更直接的关系</p>
 </li>
-<li><p>条件生成对抗网络</p>
+<li><p>借鉴LUNA16，提供了医生为800+病人标注的1000多个肺结节</p>
 </li>
-<li><p>INFO生成对抗网络</p>
+<li><p>从整体CT图像中的标记周围裁剪出小型3D图像块，最终可以用更小的3D图像块与结节标记直接对应。结节大小是癌症的一个影响因素，数据集也说明了结节的大小。</p>
+<p><img src="https://pic3.zhimg.com/v2-76be917d76e61d72a8f1fb6fdde13809_r.jpg" alt=""></p>
 </li>
-<li><p>Wasserstein GAN</p>
+<li><p>LUNA16数据集是由另一个公开数据集LIDC-IDRI转化过来的。在原始数据集中，医生不仅要检测结节，而且还评估了结节的恶性程度和其他指标。我们发现，恶性程度是评估患癌风险的最佳指标，也是神经网络可以学习的。</p>
+<p><strong>最终方案</strong></p>
+<p>训练一个神经网络来检测结节，并评估结节的恶性程度。在预测时，网络通过滑动窗口来遍历整体CT图像，分别判断每个滑动窗口的区域包含恶性信息的可能性。最后基于这种信息和其他特征，估计该患者发展成癌症的可能性。</p>
+<p>​</p>
+<h2 id="数据、预处理、创建训练集"><a href="#数据、预处理、创建训练集" class="headerlink" title="数据、预处理、创建训练集"></a>数据、预处理、创建训练集</h2><h3 id="处理图像"><a href="#处理图像" class="headerlink" title="处理图像"></a>处理图像</h3></li>
+<li><p>缩放CT图像：每个像素点只表示1x1x1毫米的体积。</p>
 </li>
-<li><p>实例解析：deepcolor</p>
+<li><p>对于CT图像，像素强度可以用Hounsfield来表示，一般叫做亨氏单位。论坛里提到，要尽量降低像素强度，即最大化hounsfield值，然后归一化处理。同时还要确保所有CT扫描都具有相同的方向。</p>
+</li>
+<li><p>极大部分关于结节检测的文献都是先从CT扫描图像中分离出肺组织。然而目前没有合适的分割方法 ——解决方式：训练一个U-net网络，来更好地分割肺部。</p>
+<p>​</p>
+<h3 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h3><p>使用样本中的标签，自动生成训练集的标签，也采用主动学习方法，添加部分人工标记。以下是带有标记的不同数据集：</p>
+<p><img src="https://pic2.zhimg.com/50/v2-28acc32de495d358a29d50528b5d08b4_hd.jpg" alt=""></p>
+<p>数据集部分做了大量的工作</p>
+</li>
+<li><p>LIDC数据集中被正面标记的数量是LUNA16数据集样本数的五倍。因为这些标记是4名医生的综合注释，所以一个结节可能被标记了4次。但LUNA16也忽略了不到3名医生标注的结节。我决定在训练集中保留这些被忽视的结节，因为他们也提供了宝贵的结节恶性信息。</p>
+</li>
+<li><p>LUNA16 v2数据集的标签是直接从LUNA16传来，一般是多个结节检测系统错误标出的假阳性结节。要注意的是，部分结节是上面提到的不到3名医生标记的结节。保留了这些结节标记，是为了平衡那些可疑的假阳性结节。</p>
+</li>
+<li><p>为了得到肺部轮廓，需要得到非肺组织的底片。使用了论坛中提到的简单肺分割算法，在分割掩码边缘周围进行采样标注，从而分割得到肺部组织。</p>
+</li>
+<li><p>在进行第一轮训练之后，在LUNA16数据集上进行结节预测，得到了所有假阳性结节，也并入LUNA16 v2数据集中。</p>
+</li>
+<li><p>NDSB数据集上训练网络。手动地从癌症样本中选择明显的阳性结节，并从非癌症样本中选择假阳性结节，用这些数据训练了第二个模型。（我希望效果不错，但我是一个不合格的放射科医生，实际上第二个模型比无手动标注的模型要糟糕得多。但是结合这两个模型，这个得到的融合模型比单独的模型效果更好，所以我保留了第二个模型。）</p>
+<hr>
+<p>​</p>
+<h3 id="UNet简介"><a href="#UNet简介" class="headerlink" title="UNet简介"></a><strong>UNet简介</strong></h3><h4 id="语义分割"><a href="#语义分割" class="headerlink" title="语义分割"></a><em>语义分割</em></h4><p>— 语义分割,简单来说就是给定一张图片,对图片中的每一个像素点进行分类</p>
+<p>​</p>
+<p>比如说下图,原始图片是一张街景图片,经过语义分割之后的图片就是一个包含若干种颜色的图片,其中每一种颜色都代表一类。</p>
+<p><img src="http://img.blog.csdn.net/20170421142155450?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkzMTU4Mg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p>​</p>
+<p><em>注意区分目标检测（二分类）、目标识别（二分或多分类）、实例分割</em></p>
+<p>​</p>
+<h4 id="FCN与CNN"><a href="#FCN与CNN" class="headerlink" title="FCN与CNN"></a><em>FCN与CNN</em></h4><p>全卷积神经网络中,没有了全连接层,取而代之的是卷积层,如下图所示:</p>
+<p><img src="http://img.blog.csdn.net/20170423160054858?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkzMTU4Mg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p>​</p>
+<p>最后一层输出的是1000个二维数组,其中每一个数组可以可视化成为一张图像,图中的每一个像素点的灰度值都是代表当前像素点属于该类的概率,比如在这1000张图像中,取出其中代表tabby cat的概率图,颜色从蓝到红,代表当前点属于该类的概率就越大。</p>
+<p>可以看出FCN与CNN之间的区别就是把最后几层的全连接层换成了卷积层,这样做的好处就是能够进行dense prediction。从而实现FCN对图像进行像素级的分类，从而解决了语义级别的图像分割（semantic segmentation）问题。与经典的CNN在卷积层之后使用全连接层得到固定长度的特征向量进行分类（全联接层＋softmax输出）不同，FCN可以接受任意尺寸的输入图像，采用反卷积层对最后一个卷积层的feature map进行上采样, 使它恢复到输入图像相同的尺寸，从而可以对每个像素都产生了一个预测, 同时保留了原始输入图像中的空间信息, 最后在上采样的特征图上进行逐像素分类。</p>
+<p>​</p>
+<p>U-Net 是这种方法中最常用的结构之一。</p>
+<p>​</p>
+<p><img src="http://img.blog.csdn.net/20170712171711426?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaGR1eGllanVu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p>​</p>
+<p>​</p>
+<hr>
+<p>​</p>
+<h2 id="3D卷积神经网络的训练方法和网络结构"><a href="#3D卷积神经网络的训练方法和网络结构" class="headerlink" title="3D卷积神经网络的训练方法和网络结构"></a>3D卷积神经网络的训练方法和网络结构</h2><h3 id="基础结节检测器样本增强"><a href="#基础结节检测器样本增强" class="headerlink" title="基础结节检测器样本增强"></a>基础结节检测器样本增强</h3><p>第一个目标是训练一个可作为基础的结节检测器。先要对正面例子进行过采样，将正反两类的样本比上调到1:20。为了提高模型的泛化能力，尝试了一些图像增强操作，但是只有一些无损的操作是有用的。最后我用了大量的转化操作和所有3D翻转操作。</p>
+<h3 id="恶化程度回归模型"><a href="#恶化程度回归模型" class="headerlink" title="恶化程度回归模型"></a>恶化程度回归模型</h3><p>训练一个用于估计恶化程度的回归模型。将肿瘤恶化程度分为从1（很可能不是恶性）到5（很可能是恶性的）。为了强调肿瘤的恶性程度，将标签平方，范围扩大为从1到25。最开始，考虑了分阶段的一种方法，用第一个网络来分类节点，然后训练另一个网络估计结节的恶化程度。为了缩短计算时间，尝试只用一个网络，以多任务学习的方法，同时进行训练这两个任务。当编程实现后，发现这个方法简单快速，网络的效果也很好。</p>
+<h3 id="网络使用"><a href="#网络使用" class="headerlink" title="网络使用"></a>网络使用</h3><p>神经网络的结构上花费的时间相对较少，因为已经有很多优秀网络可供参考。刚开始我使用了一些简单的VGG网络和Resnet网络的相似结构，但是它们的性能大致相同。然后我尝试用一个预训练好的C3D网络，原有的网络权重根本没有帮助，但直接初始化权重后，这种网络结构的效果很好。基于C3D网络进行若干次调整后，我得到最终的分类评估网络。</p>
+<p><img src="https://pic2.zhimg.com/50/v2-94f56212df07f9800d49bf0a369e1696_hd.jpg" alt=""></p>
+<p>​</p>
+<h3 id="3D卷积神经网络简介"><a href="#3D卷积神经网络简介" class="headerlink" title="3D卷积神经网络简介"></a>3D卷积神经网络简介</h3><h4 id="提出背景"><a href="#提出背景" class="headerlink" title="提出背景"></a>提出背景</h4><p>基于视频分析的问题，2D convolution不能很好得捕获时序上的信息。因此3D convolution就被提出来了。</p>
+<p>​</p>
+<h4 id="C3D-network"><a href="#C3D-network" class="headerlink" title="C3D network"></a>C3D network</h4><p>C3D network是作为一个通用的网络提出的，文章中将其用于行为识别，场景识别，视频相似度分析等领域。</p>
+<p>​</p>
+<h4 id="2D-与-3D-卷积操作"><a href="#2D-与-3D-卷积操作" class="headerlink" title="2D 与 3D 卷积操作"></a>2D 与 3D 卷积操作</h4><p><img src="http://ofltv9hb9.bkt.clouddn.com/image/c3d/2d3dconv.png" alt=""></p>
+<p>a)和b)分别为2D卷积用于单通道图像和多通道图像的情况（此处多通道图像可以指同一张图片的3个颜色通道，也指多张堆叠在一起的图片，即一小段视频），对于一个滤波器，输出为一张二维的特征图，多通道的信息被完全压缩了。而c)中的3D卷积的输出仍然为3D的特征图。</p>
+<p>​</p>
+<p>现在考虑一个视频段输入，其大小为 c∗l∗h∗w,其中c为图像通道(一般为3),l为视频序列的长度，h和w分别为视频的宽与高。进行一次kernel size为3∗3∗3,stride为1,padding=True,滤波器个数为K的3D 卷积后，输出的大小为K∗l∗h∗w。池化同理。</p>
+<p>​</p>
+<h4 id="C3D-network-结构"><a href="#C3D-network-结构" class="headerlink" title="C3D network 结构"></a>C3D network 结构</h4><p><img src="http://ofltv9hb9.bkt.clouddn.com/image/c3d/c3d.png" alt=""></p>
+<p>基于3D卷积操作，作者设计了如上图所示的C3D network结构。共有8次卷积操作，4次池化操作。其中卷积核的大小均为3∗3∗3，即一次输入16帧图像。</p>
+<p>​</p>
+<h2 id="癌症预测"><a href="#癌症预测" class="headerlink" title="癌症预测"></a>癌症预测</h2><h3 id="结果与问题"><a href="#结果与问题" class="headerlink" title="结果与问题"></a>结果与问题</h3><p>训练好网络后，下一步是让神经网络检测结节并估计其恶化程度。</p>
+</li>
+<li><p>检测到了许多作者完全忽视的结节</p>
+</li>
+<li><p>严重的问题：错过了一些非常大的明显结节，所以影响了对于假阴性的得分，有时使LogLoss升高了3.00。</p>
+<h3 id="解决方式"><a href="#解决方式" class="headerlink" title="解决方式"></a>解决方式</h3><p>对CT图像进行了两次降采样，看看检测器是否会检测大结节。值得注意的是，它的效果非常好。因此，我调整了网络结构，让网络预测3个尺度，分别为1，1.5和2.0。</p>
+<p><img src="https://pic3.zhimg.com/v2-646cd2e4938aedc94d14f60e7f2ea102_r.jpg" alt=""></p>
+<p>在缩放1x的左图中，没有很好地检测到大结节；但是在2x放大的右图时，效果较好。矩形的大小表示检测到的恶性肿瘤。</p>
+</li>
+</ul>
+<h1 id="Kaggle-肺癌结节检测（Data-Science-Bowl-2017）微软团队解析"><a href="#Kaggle-肺癌结节检测（Data-Science-Bowl-2017）微软团队解析" class="headerlink" title="Kaggle 肺癌结节检测（Data Science Bowl 2017）微软团队解析"></a>Kaggle 肺癌结节检测（Data Science Bowl 2017）微软团队解析</h1><h2 id="基本信息-1"><a href="#基本信息-1" class="headerlink" title="基本信息"></a>基本信息</h2><p>微软的 Miguel Fierro, Ye Xing, Tao Wu 等人在 2017 年 1 月 Kaggle 上的“数据科学肺癌检测竞赛”里，在60 分钟内，利用已训练好的卷积神经网络 ResNet-157 提取 CT 图像的特征，并训练提升树（boosted tree），以识别肺癌 CT 影像是癌症阴性或阳性。他们获得了不错的成绩——1 月 19 日之前排名位前 10%，2 月 7 日之前，居前 20%（其实挺一般的）。</p>
+<h2 id="使用工具"><a href="#使用工具" class="headerlink" title="使用工具"></a>使用工具</h2><ol>
+<li>特征提取：已训练好的卷积神经网络——一个用 CNTK 开发的 152 层 ResNet 模型，用 ImageNet 的图像数据集进行的训练；</li>
+<li>图像分类：LightGBM 灰度提升框架；</li>
+<li>带 GPU 加速的 Azure 虚机；</li>
+</ol>
+<p><em>个人感觉最normal的方法吧</em>，谁让kaggle这个判断只是否具有癌症。</p>
+<h4 id="LightGBM"><a href="#LightGBM" class="headerlink" title="LightGBM"></a>LightGBM</h4><p>LightGBM是微软DMTK框架的一部分，将灰度提升树用于分布式集群上，以达到更快的速度，而且随着节点数增加，可以成比例地提高计算性能。<a href="https://medium.com/implodinggradients/benchmarking-lightgbm-how-fast-is-lightgbm-vs-xgboost-15d224568031" target="_blank" rel="noopener">据好事者测，比XGBoost快10倍，内存使用稍微少些</a>。作为微软AI的两大利器，<a href="https://www.dmtk.io/" target="_blank" rel="noopener">DMTK（Distributed Machine Learning Toolkit）</a>主要优势是分布式，而非深度学习。<a href="http://cntk.ai/" target="_blank" rel="noopener">CNTK</a>的优势在于深度学习，所以这两种常常一起用。</p>
+<h2 id="技术细节"><a href="#技术细节" class="headerlink" title="技术细节"></a>技术细节</h2><ul>
+<li>像 ImageNet 的 RBG 样本那样，裁切到 224x224 大小，三张一组。分成 K 批输入前面提到的已训练的神经网络，计算到“pentimate layer”为止。</li>
+<li>去掉最后的pooling 和 softmax 层，设置penultimate layer，作为输出及分类器输入。</li>
+<li>LightGBM分类器（实验时候尝试的，之后换成了ResNet）</li>
+</ul>
+<p><img src="https://res.infoq.com/articles/resnet-azure-gpu/zh/resources/25.png" alt=""></p>
+<h1 id="阿里天池肺部结节智能检测"><a href="#阿里天池肺部结节智能检测" class="headerlink" title="阿里天池肺部结节智能检测"></a>阿里天池肺部结节智能检测</h1><h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><ul>
+<li>肺癌-世界死亡率最高的癌症</li>
+<li>CT 影像-肺癌检测最直接有效的工具</li>
+<li>肺结节-肺癌的早期临床表现</li>
+<li>肺结节检测-肺癌检测中最重要的环节</li>
+<li>医生使用逐层观察的阅片方式</li>
+<li>3D检测</li>
+<li>结合医学知识</li>
+</ul>
+<p><img src="/img/02/1.png" alt="img"></p>
+<p><img src="/img/02/2.png" alt="img"></p>
+<p><img src="/img/02/3.png" alt="img"></p>
+<h2 id="相关比赛介绍"><a href="#相关比赛介绍" class="headerlink" title="相关比赛介绍"></a>相关比赛介绍</h2><h3 id="LUNA2016"><a href="#LUNA2016" class="headerlink" title="LUNA2016"></a>LUNA2016</h3><ul>
+<li>888例CT图像</li>
+<li>结节检测与良恶性判别</li>
+<li>需提交结节坐标与概率</li>
+<li>FROC、十折交叉验证作为评价指标</li>
+</ul>
+<h3 id="LUNA2016中作者使用的方法"><a href="#LUNA2016中作者使用的方法" class="headerlink" title="LUNA2016中作者使用的方法"></a>LUNA2016中作者使用的方法</h3><p><img src="/img/02/4.png" alt="img"></p>
+<ul>
+<li>Faster—    RCNN逐层扫描，连续三个图作为RGB三个通道，VGG-16</li>
+<li>Feature map增大——反卷积</li>
+<li>anchor大小调整</li>
+<li>设计三维NMS（极大值抑制）方案合并二维图像</li>
+<li>最后 利用3D VGG网络 进行分类</li>
+<li>第一名</li>
+</ul>
+<h3 id="Kaggle-Data-Science-Bowl-2017"><a href="#Kaggle-Data-Science-Bowl-2017" class="headerlink" title="Kaggle Data Science Bowl 2017"></a>Kaggle Data Science Bowl 2017</h3><ul>
+<li>癌症预测</li>
+<li>1600例训练数据和500例测试数据</li>
+<li>标注是否会得癌症</li>
+<li>二分类交叉熵损失</li>
+</ul>
+<h3 id="Kaggle竞赛中作者的解决方案"><a href="#Kaggle竞赛中作者的解决方案" class="headerlink" title="Kaggle竞赛中作者的解决方案"></a>Kaggle竞赛中作者的解决方案</h3><ul>
+<li>2D Faster RCNN + 3D CNN检测</li>
+<li>利用LIDC-IDRI数据集的结节良恶信息进行结节分类</li>
+<li>获得第四名</li>
+</ul>
+<h3 id="天池医疗AI大赛"><a href="#天池医疗AI大赛" class="headerlink" title="天池医疗AI大赛"></a>天池医疗AI大赛</h3><ul>
+<li>初复赛不同</li>
+<li>复赛意义不大。</li>
+</ul>
+<p><img src="/img/02/5.png" alt="img"></p>
+<h2 id="问题难点"><a href="#问题难点" class="headerlink" title="问题难点"></a>问题难点</h2><ul>
+<li>肺结节体积变化大、形状各异</li>
+<li>肺结节亮度差异大</li>
+<li>肺内环境复杂</li>
+<li>CT成像质量有差异</li>
+</ul>
+<ul>
+<li><p>肺门区域结节（非孤立结节，附近有器官、气管等影响），需要整合多尺度信息，有效地将结节与正常组织区分开。</p>
+<p><img src="/img/02/6.png" alt="img"></p>
+</li>
+<li><p>磨玻璃结节，亮度低，形状不规则。</p>
+</li>
+</ul>
+<p><img src="/img/02/7.png" alt="img"></p>
+<ul>
+<li>结节临床意义分析。</li>
+</ul>
+<h2 id="复赛使用方法"><a href="#复赛使用方法" class="headerlink" title="复赛使用方法"></a>复赛使用方法</h2><h3 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h3><p><em>NOTE：其实初赛还是使用faster rcnn，只是由于复赛条件限制改变了。所以略。</em></p>
+<p><img src="/img/02/8.png" alt="img"></p>
+<h3 id="特征金字塔网络"><a href="#特征金字塔网络" class="headerlink" title="特征金字塔网络"></a>特征金字塔网络</h3><p><strong>特征金字塔</strong>在基于深度学习的多尺度目标检测中早有应用，通常有以下几种使用方式。</p>
+<p>（1）网络是一个简单的全卷积网络，为了检测不同尺度的目标，依次将原图按比例缩放并送入网络。缺点是需要多次resize图像，繁琐耗时。</p>
+<p><img src="http://img.blog.csdn.net/20170207171308454?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc2h1emZhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p>（2） 网络是一个高深的全卷积网络，输入任意尺寸的原图，得到一个feature map，在feature map上进行多个尺度的目标位置回归。 R-CNN系列就是这种方法。缺点是容易漏掉小目标，同时搞定多个尺度难度较大。</p>
+<p><img src="http://img.blog.csdn.net/20170207172506636?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc2h1emZhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p>（3） 对(2)进行改进，在不同分辨率的feature map上进行目标位置预测。缺点是底部的feature map的特征表达能力不足。</p>
+<p><img src="http://img.blog.csdn.net/20170207173108056?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc2h1emZhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p>（4）有点类似(2)和(3)的组合，既可以在不同分辨率的feature map上检测对应尺度的目标，同时feature map又具有足够的特征表达能力。这是因为每层的feature map来源于当前层和更高级层的特征融合。</p>
+<p><img src="http://img.blog.csdn.net/20170207173726622?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc2h1emZhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p>具体的融合方法如下图所示，每一级的feature map尺寸都是2倍的关系，“2x up”采用的是最简单的最近邻上采样。</p>
+<h1 id="资料参考与借鉴"><a href="#资料参考与借鉴" class="headerlink" title="资料参考与借鉴"></a>资料参考与借鉴</h1><ol>
+<li><p><a href="https://zhuanlan.zhihu.com/p/26767213" target="_blank" rel="noopener">Kaggle百万美元大赛优胜者：用CNN识别CT图像检测肺癌</a></p>
+</li>
+<li><p><a href="http://blog.csdn.net/u012931582/article/details/70314859" target="_blank" rel="noopener">语义分割(semantic segmentation) 常用神经网络介绍对比-FCN SegNet U-net DeconvNet</a></p>
+</li>
+<li><p><a href="https://github.com/juliandewit/kaggle_ndsb2017" target="_blank" rel="noopener">Github 源码</a></p>
+</li>
+<li><p><a href="http://www.10tiao.com/html/157/201705/2653162413/1.html" target="_blank" rel="noopener">一篇文章掌握Kaggle竞赛中的基于ResNet和Azure GPU加速的肺癌CT图像识别</a></p>
+</li>
+<li><p><a href="http://blog.csdn.net/shuzfan/article/details/54913369" target="_blank" rel="noopener">目标检测——特征金字塔网络</a></p>
+<p>​</p>
 </li>
 </ol>
-<h1 id="生成对抗网络介绍"><a href="#生成对抗网络介绍" class="headerlink" title="生成对抗网络介绍"></a>生成对抗网络介绍</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><ul>
-<li><p>非监督式学习</p>
-</li>
-<li><p>神经网络相互博弈</p>
-</li>
-<li><p>扬·古德费洛2014年提出</p>
-</li>
-</ul>
-<h2 id="组成部分"><a href="#组成部分" class="headerlink" title="组成部分"></a>组成部分</h2><ul>
-<li><p>生成网络：从潜在空间（latent space）中随机采样作为输入，其输出结果需要尽量模仿训练集中的真实样本。</p>
-</li>
-<li><p>判别网络：判别网络的输入为真实样本或生成网络的输出，其目的是将生成网络的输出从真实样本中尽可能分辨出来。</p>
-</li>
-<li><p>生成网络则要尽可能地欺骗判别网络。两个网络相互对抗、不断调整参数，最终目的是使判别网络无法判断生成网络的输出结果是否真实。</p>
-</li>
-</ul>
-<h2 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h2><p>图片生成、视频生成、三维物体模型、甚至文本生成等。</p>
-<h2 id="实现方式与数学原理"><a href="#实现方式与数学原理" class="headerlink" title="实现方式与数学原理"></a>实现方式与数学原理</h2><p><img src="/img/01/clip_image002.png" alt="img"></p>
-<ul>
-<li><p>生成模型G与判别模型D</p>
-</li>
-<li><p>生成模型G用于从最初给定的高斯随机噪声Z映射到真实数据空间。</p>
-</li>
-<li><p>判别模型D用于判断输入是否为真实数据，返回{0,1}结果</p>
-</li>
-<li><p>生成模型G要不断欺骗判别模型D，而判别模型D要不断学习防止被欺骗。则目标函数可以表示为：<img src="/img/01/clip_image004.png" alt="img"></p>
-</li>
-</ul>
-<p>具体细化分解为：</p>
-<p>定义判别模型，将真实样本全部判别为1，将生成样本全部判别为0，将两个问题都转为最大化问题，则有</p>
-<p><img src="/img/01/clip_image006.png" alt="img"></p>
-<p><img src="/img/01/clip_image008.png" alt="img"></p>
-<p>我们将两者相加，构成目标函数</p>
-<p><img src="/img/01/clip_image010.png" alt="img"></p>
-<p>为了保证判别模型最优，我们需要将V(G,D)最大化</p>
-<p><img src="/img/01/clip_image012.png" alt="img"></p>
-<p>在保证了判别模型最优的情况下，我们将调节生成模型，使得生成模型让最优判别模型效果最差，则有</p>
-<p><img src="/img/01/clip_image014.png" alt="img"></p>
-<p>最终我们获得了目标函数</p>
-<p><img src="/img/01/clip_image015.png" alt="img"></p>
-<p>学习的过程中还是使用梯度下降</p>
-<p><img src="/img/01/clip_image017.png" alt="img"></p>
-<p>证明V（D,G）有最优判别模型：</p>
-<p><img src="/img/01/clip_image019.png" alt="img"></p>
-<p><img src="/img/01/clip_image021.png" alt="img"></p>
-<p>那么最优的判别模型就是：</p>
-<p><img src="/img/01/clip_image023.png" alt="img"> </p>
-<p>GAN最终的目的是，得到生成模型可以生成非常逼真的数据，也就是说和真实数据分布一样的数据，此时鉴别模型的输出为1/2 = 0.5</p>
-<p>我们也可以证明生存模型是存在的：</p>
-<p><img src="/img/01/clip_image025.png" alt="img"></p>
-<p>充分性：</p>
-<p><img src="/img/01/clip_image027.png" alt="img"></p>
-<p>必要性：</p>
-<p><img src="/img/01/clip_image029.png" alt="img"></p>
-<p><img src="/img/01/clip_image031.png" alt="img"></p>
-<p><img src="/img/01/clip_image033.png" alt="img"><img src="/img/01/clip_image035.png" alt="img"></p>
-<p>KL散度永远大于等于0，可以知道目标函数最终最优值为-log4</p>
-<h2 id="举例：模拟高斯分布"><a href="#举例：模拟高斯分布" class="headerlink" title="举例：模拟高斯分布"></a>举例：模拟高斯分布</h2><p><img src="/img/01/clip_image037.png" alt="img"></p>
-<p>其中，蓝线为判别分界，黑点为真实数据，绿线为生成模型，整个高斯分布的学习过程，就是先优化判别模型，使得蓝色判别分界最优化，再优化生成模型，使得生成模型和真实高斯分布能够迷惑判别模型，判别结果为0.5（即完全迷惑）。</p>
-<h1 id="简单的生成对抗网络"><a href="#简单的生成对抗网络" class="headerlink" title="简单的生成对抗网络"></a>简单的生成对抗网络</h1><h2 id="简单GAN模型结构"><a href="#简单GAN模型结构" class="headerlink" title="简单GAN模型结构"></a>简单GAN模型结构</h2><p><img src="/img/01/clip_image039.png" alt="img"></p>
-<pre><code>例如，该结构使用简单的神经网络结构，生成器G方面使用全连接，输入为随机初始化的Z，输出G(Z)为通过生成器生成的图片数据。将生成图片与真实图片再放入一个神经网络结构进行判别，判断来自X的可能性，是一个常量。
-</code></pre><h2 id="简单GAN模型效果"><a href="#简单GAN模型效果" class="headerlink" title="简单GAN模型效果"></a>简单GAN模型效果</h2><pre><code>在不同的实验中，对模型进行了不同的更改，也达到了一定的效果，在GOODFLOW的论文中采用了不同的数据集和不同的模型，获得了如下生成效果     
-</code></pre><p><img src="/img/01/clip_image041.png" alt="img"><img src="/img/01/clip_image043.png" alt="img"></p>
-<h1 id="深度生成对抗网络"><a href="#深度生成对抗网络" class="headerlink" title="深度生成对抗网络"></a>深度生成对抗网络</h1><p>深度生成对抗网络，也就是常说的DCGAN，深度卷积生成对抗网络，在简单生成对抗网络的基础上加入的卷积层，使得生成对抗神经网络对图像等数据的生成效果更加优秀。</p>
-<h2 id="DCGAN模型框架"><a href="#DCGAN模型框架" class="headerlink" title="DCGAN模型框架"></a>DCGAN模型框架</h2><p>​       整个生成模型部分结构如下，它是由最初随机生成的Z，通过多次de-convolution操作，生成成为64x64x3的图片。</p>
-<p><img src="/img/01/clip_image045.png" alt="img"></p>
-<p>De-convolution是卷积的逆向操作，常用的方法为transport-convolution，上采样卷积，但上采样卷积由不能算真正的反卷积，因为它只能还原大小，无法还原其真实值。</p>
-<p><img src="/img/01/clip_image047.png" alt="img"></p>
-<p>​       蓝色2x2区域为输入，通过3x3的反卷积操作，得到了上面的4x4的区域。</p>
-<p>​       DCGAN模型在LSUN（卧室图片集）上效果</p>
-<p><img src="/img/01/clip_image049.png" alt="img"></p>
-<h2 id="DCGAN模型实现时的技术细节"><a href="#DCGAN模型实现时的技术细节" class="headerlink" title="DCGAN模型实现时的技术细节"></a>DCGAN模型实现时的技术细节</h2><p>(1)D Leaky-relu激活函数，G relu 激活函数。<br>(2)使用batch_normalization。<br>(3)没有pooling层，使用步长为2的卷积。<br>(4)学习率很小，rate=0.0002。</p>
-<h2 id="启发"><a href="#启发" class="headerlink" title="启发"></a>启发</h2><pre><code>DCGAN生成了图片之后，在D模型中转化为了特征向量后同样能够用来做分类等传统操作吗？
-</code></pre><p><img src="/img/01/clip_image051.png" alt="img"></p>
-<pre><code>有人（原论文）将DCGAN+SVM用于图片分类，即将DCGAN中生成的图片同样进行特征提取，输入SVM中进行分类，效果还不错。
-</code></pre><h2 id="DCGAN模型中随机初始化的噪声Z对生成结果的影响"><a href="#DCGAN模型中随机初始化的噪声Z对生成结果的影响" class="headerlink" title="DCGAN模型中随机初始化的噪声Z对生成结果的影响"></a>DCGAN模型中随机初始化的噪声Z对生成结果的影响</h2><p>​       通过改变Z某一维度的值，生成图片会发生明显并含有规律的变化，这证明了Z噪声和词向量有一定的相似之处，在训练完GAN模型之后，能用来表达图片的特征。</p>
-<p>改变Z某一维度值后生成的图片发生的变化：<img src="/img/01/clip_image053.png" alt="img"></p>
-<p>​       在下图中，我们将戴眼镜男子的随机信号设定为Z1（可以将所有不戴眼镜男子的Z值作平均操作，后同），不戴眼镜的男子随机信号设定为Z2，不戴眼镜的女子随机信号设定为Z3，最后得到的Z4 = Z1 –Z2 + Z3。</p>
-<p><img src="/img/01/clip_image055.png" alt="img"></p>
-<pre><code>更多特征研究，如方向插值等……
-</code></pre><p><img src="/img/01/clip_image057.png" alt="img"></p>
-<h1 id="条件生成对抗网络"><a href="#条件生成对抗网络" class="headerlink" title="条件生成对抗网络"></a>条件生成对抗网络</h1><h2 id="条件生成对抗模型-cGAN-模型"><a href="#条件生成对抗模型-cGAN-模型" class="headerlink" title="条件生成对抗模型(cGAN)模型"></a>条件生成对抗模型(cGAN)模型</h2><p>意在通过给定一些其他label信息，引导生成模型的输出。与之前我们所看到的不同的是，输入部分不仅仅是一个简单的随机噪声Z，又多了一个标准的label向量Y。</p>
-<p>即训练过程的输入为：随机噪声信息+约束条件特征表示。</p>
-<p>目标函数更新为<img src="/img/01/clip_image059.png" alt="img"></p>
-<p><img src="/img/01/clip_image061.png" alt="img"></p>
-<p>​       </p>
-<h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><p>使用标签类别作为条件变量y，对编码成one-hot向量的MNIST图像进行条件对抗网络的训练。</p>
-<p>效果如下，左为有条件的，右为无条件的。</p>
-<p><img src="/img/01/clip_image063.png" alt="img"><img src="/img/01/clip_image065.png" alt="img"></p>
-<p>若我们给定的Y是文字，则模型可以如下表示：</p>
-<p><img src="/img/01/clip_image067.png" alt="img"></p>
-<p>如图所示，生成模型将句子转为特征后拼接于在Z之后进行传统的GAN DCGAN操作，生成图片，判别模型将图片特征抽取后再加入句子特征进行判别。</p>
-<p><img src="/img/01/clip_image069.png" alt="img"></p>
-<p>若我们给定的Y是文字+位置，则模型可以如下表示：</p>
-<p><img src="/img/01/clip_image071.png" alt="img"></p>
-<p>如图所示，生成模型将句子转为特征后拼接于在Z之后，分两个模块分别加入全局信息和局部位置信息，组合后进行传统的GAN DCGAN操作，生成图片，判别模型将图片特征抽取后再加入句子特征、全局特征、位置信息等，综合进行判别。</p>
-<p><img src="/img/01/clip_image073.png" alt="img"></p>
-<p>若我们给定的Y是一张图片，即我们模型的输入会是一个图片对，则模型可以如下表示：</p>
-<p><img src="/img/01/clip_image075.png" alt="img"></p>
-<p>目标函数则变化为：</p>
-<p><img src="/img/01/clip_image077.png" alt="img"></p>
-<p>效果如下：</p>
-<p><img src="/img/01/clip_image079.png" alt="img"></p>
-<h1 id="Info-GAN"><a href="#Info-GAN" class="headerlink" title="Info GAN"></a>Info GAN</h1><h2 id="InfoGAN的基本思想"><a href="#InfoGAN的基本思想" class="headerlink" title="InfoGAN的基本思想"></a>InfoGAN的基本思想</h2><p>​       同样也是在输入部分进行更改，输入噪声向量改变为两个部分：</p>
-<p>​       （1）Z，噪声向量，随机初始化。</p>
-<p>​       （2）C，语义向量，随机初始化。定义一系列的相互独立的潜在语义变量C1、C2……</p>
-<p>这个语义变量C，是用来提供信息正则化约束项的，即潜在变量C与生成样本G(z,c)的互信息量应该比较大，即I（c;G(z,c)）应该较大。</p>
-<p>​       改进后的目标函数：</p>
-<p><img src="/img/01/clip_image081.png" alt="img"></p>
-<p>​       实现方式：</p>
-<p><img src="/img/01/clip_image083.png" alt="img"></p>
-<p><img src="/img/01/clip_image085.png" alt="img"></p>
-<p>​       最终达到的效果是，通过改变具有物理意义的C，可以用于生成不同风格的特定图片。</p>
-<p><img src="/img/01/clip_image087.png" alt="img"></p>
-<h2 id="数学证明："><a href="#数学证明：" class="headerlink" title="数学证明："></a>数学证明：</h2><p>​互信息：</p>
-<p><img src="/img/01/clip_image089.png" alt="img"><img src="/img/01/clip_image091.png" alt="img"></p>
-<p>条件熵：</p>
-<p><img src="/img/01/clip_image093.png" alt="img"></p>
-<p>利用贝叶斯公式：</p>
-<p><img src="/img/01/clip_image095.png" alt="img"></p>
-<p>I(X;Y)根据对数函数可分解为：</p>
-<p><img src="/img/01/clip_image097.png" alt="img"></p>
-<p><img src="/img/01/clip_image099.png" alt="img"><img src="/img/01/clip_image101.png" alt="img"></p>
-<p><img src="/img/01/clip_image103.png" alt="img"></p>
-<p>引入一个估计分布q(y|x) ：</p>
-<p><img src="/img/01/clip_image105.png" alt="img"><img src="/img/01/clip_image107.png" alt="img"></p>
-<h1 id="W-GAN"><a href="#W-GAN" class="headerlink" title="W GAN"></a>W GAN</h1><h2 id="W-GAN-简介"><a href="#W-GAN-简介" class="headerlink" title="W GAN 简介"></a>W GAN 简介</h2><p>从<a href="http://link.zhihu.com/?target=https%3A//arxiv.org/abs/1406.2661" target="_blank" rel="noopener">2014年Ian Goodfellow提出</a>以来，GAN就存在着训练困难、生成器和判别器的loss无法指示训练进程、生成样本缺乏多样性等问题。从那时起，很多论文都在尝试解决，但是效果不尽人意，比如最有名的一个改进<a href="http://link.zhihu.com/?target=https%3A//arxiv.org/abs/1511.06434" target="_blank" rel="noopener">DCGAN</a>依靠的是对判别器和生成器的架构进行实验枚举，最终找到一组比较好的网络架构设置，但是实际上是治标不治本，没有彻底解决问题。而今天的主角Wasserstein GAN（下面简称WGAN）成功地做到了以下爆炸性的几点：</p>
-<h2 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a>贡献</h2><ul>
-<li><p>彻底解决GAN训练不稳定的问题，不再需要小心平衡生成器和判别器的训练程度</p>
-</li>
-<li><p>基本解决了collapse mode的问题，确保了生成样本的多样性 </p>
-</li>
-<li><p>训练过程中终于有一个像交叉熵、准确率这样的数值来指示训练的进程，这个数值越小代表GAN训练得越好，代表生成器产生的图像质量越高</p>
-</li>
-</ul>
-<p><img src="/img/01/clip_image109.png" alt="img"></p>
-<p>以上一切好处不需要精心设计的网络架构，最简单的多层全连接网络就可以做到</p>
-<h2 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h2><p>改进后相比原始GAN的算法实现流程却只改了四点：</p>
-<ul>
-<li><p>判别器最后一层去掉sigmoid</p>
-</li>
-<li><p>生成器和判别器的loss不取log</p>
-</li>
-<li><p>每次更新判别器的参数之后把它们的绝对值截断到不超过一个固定常数c</p>
-</li>
-<li><p>不要用基于动量的优化算法（包括momentum和Adam），推荐RMSProp，SGD也行</p>
-</li>
-</ul>
-<p>WGAN如果用类似DCGAN架构，生成图片的效果与DCGAN差不多：</p>
-<p><img src="/img/01/clip_image111.png" alt="img"> </p>
-<p>WGAN不用DCGAN各种特殊的架构设计也能做到不错的效果，比如如果大家一起拿掉Batch Normalization的话，DCGAN就崩了：</p>
-<p><img src="/img/01/clip_image113.png" alt="img"></p>
-<p>如果WGAN和原始GAN都使用多层全连接网络（MLP），不用CNN，WGAN质量会变差些，但是原始GAN不仅质量变得更差，而且还出现了collapse mode，即多样性不足：</p>
-<p><img src="/img/01/clip_image115.png" alt="img"></p>
-<p><a href="https://zhuanlan.zhihu.com/p/25071913" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/25071913</a>  这里的公式推导太长了……</p>
-<h1 id="实例解析：DeepColor"><a href="#实例解析：DeepColor" class="headerlink" title="实例解析：DeepColor"></a>实例解析：DeepColor</h1><h2 id="Deep-color"><a href="#Deep-color" class="headerlink" title="Deep color"></a>Deep color</h2><p><a href="https://github.com/kvfrans/deepcolor" target="_blank" rel="noopener">https://github.com/kvfrans/deepcolor</a>  deepcolor 补全色彩，条件GAN。</p>
-<p>需要改源码才能运行！！</p>
-<p>我的运行结果：</p>
-<p><img src="/img/01/clip_image117.png" alt="img"><img src="/img/01/clip_image119.png" alt="img"></p>
-<p><a href="https://github.com/YadiraF/GAN" target="_blank" rel="noopener">https://github.com/YadiraF/GAN</a>  绝大部分GAN的简单代码，可以用来讲解流程。没跑过。</p>
 
           
         
@@ -546,7 +563,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -592,7 +609,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -647,7 +664,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

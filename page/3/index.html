@@ -260,7 +260,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://zchgql.com/2017/12/15/Kaggle 肺癌结节检测第二名解析/">
+    <link itemprop="mainEntityOfPage" href="http://zchgql.com/2017/12/19/目标定位/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zhu Chenghao">
@@ -279,7 +279,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/12/15/Kaggle 肺癌结节检测第二名解析/" itemprop="url">肺癌结节检测</a></h1>
+                <a class="post-title-link" href="/2017/12/19/目标定位/" itemprop="url">目标检测</a></h1>
         
 
         <div class="post-meta">
@@ -291,8 +291,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-15T12:13:09+08:00">
-                2017-12-15
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-19T18:37:36+08:00">
+                2017-12-19
               </time>
             
 
@@ -331,199 +331,92 @@
       
         
           
-            <h1 id="Kaggle-肺癌结节检测（Data-Science-Bowl-2017）第二名解析"><a href="#Kaggle-肺癌结节检测（Data-Science-Bowl-2017）第二名解析" class="headerlink" title="Kaggle 肺癌结节检测（Data Science Bowl 2017）第二名解析"></a>Kaggle 肺癌结节检测（Data Science Bowl 2017）第二名解析</h1><h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
-<li>基本信息</li>
-<li>数据、预处理、创建训练集</li>
-<li>3D卷积神经网络的训练方法和网络结构</li>
-<li>癌症预测</li>
-<li>资料参考与借鉴</li>
-</ul>
-<h2 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h2><h3 id="比赛相关"><a href="#比赛相关" class="headerlink" title="比赛相关"></a>比赛相关</h3><p>Kaggle网站举办了一场用肺部CT图像进行肺癌检测的比赛Data Science Bowl 2017，提供百万美元奖金池。美国国家癌症研究所为比赛提供了高分辨率的肺部CT图像，在比赛中，参赛者根据给定的一组病人肺部CT三维图像，预测癌症风险。</p>
-<p>Julian de Wit和Daniel Hammack合作完成的解决方案获得了比赛的第二名。Wit最近写了一篇博客来介绍他们的方案。他们通过3D卷积神经网络，来构建结节探测器，预测患癌可能性。Wit在64位的Windows10系统下，结合TensorFlow 0.12.0和Keras库实现该网络模型。</p>
-<h3 id="初步计划"><a href="#初步计划" class="headerlink" title="初步计划"></a>初步计划</h3><ul>
-<li><p>肺部CT图像信噪比大约为1：1000</p>
-</li>
-<li><p>标准kaggle数据中只有1300个训练样本及对应的癌症标签</p>
-</li>
-<li><p>必须找到标签和图像特征更直接的关系</p>
-</li>
-<li><p>借鉴LUNA16，提供了医生为800+病人标注的1000多个肺结节</p>
-</li>
-<li><p>从整体CT图像中的标记周围裁剪出小型3D图像块，最终可以用更小的3D图像块与结节标记直接对应。结节大小是癌症的一个影响因素，数据集也说明了结节的大小。</p>
-<p><img src="https://pic3.zhimg.com/v2-76be917d76e61d72a8f1fb6fdde13809_r.jpg" alt=""></p>
-</li>
-<li><p>LUNA16数据集是由另一个公开数据集LIDC-IDRI转化过来的。在原始数据集中，医生不仅要检测结节，而且还评估了结节的恶性程度和其他指标。我们发现，恶性程度是评估患癌风险的最佳指标，也是神经网络可以学习的。</p>
-<p><strong>最终方案</strong></p>
-<p>训练一个神经网络来检测结节，并评估结节的恶性程度。在预测时，网络通过滑动窗口来遍历整体CT图像，分别判断每个滑动窗口的区域包含恶性信息的可能性。最后基于这种信息和其他特征，估计该患者发展成癌症的可能性。</p>
-<p>​</p>
-<h2 id="数据、预处理、创建训练集"><a href="#数据、预处理、创建训练集" class="headerlink" title="数据、预处理、创建训练集"></a>数据、预处理、创建训练集</h2><h3 id="处理图像"><a href="#处理图像" class="headerlink" title="处理图像"></a>处理图像</h3></li>
-<li><p>缩放CT图像：每个像素点只表示1x1x1毫米的体积。</p>
-</li>
-<li><p>对于CT图像，像素强度可以用Hounsfield来表示，一般叫做亨氏单位。论坛里提到，要尽量降低像素强度，即最大化hounsfield值，然后归一化处理。同时还要确保所有CT扫描都具有相同的方向。</p>
-</li>
-<li><p>极大部分关于结节检测的文献都是先从CT扫描图像中分离出肺组织。然而目前没有合适的分割方法 ——解决方式：训练一个U-net网络，来更好地分割肺部。</p>
-<p>​</p>
-<h3 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h3><p>使用样本中的标签，自动生成训练集的标签，也采用主动学习方法，添加部分人工标记。以下是带有标记的不同数据集：</p>
-<p><img src="https://pic2.zhimg.com/50/v2-28acc32de495d358a29d50528b5d08b4_hd.jpg" alt=""></p>
-<p>数据集部分做了大量的工作</p>
-</li>
-<li><p>LIDC数据集中被正面标记的数量是LUNA16数据集样本数的五倍。因为这些标记是4名医生的综合注释，所以一个结节可能被标记了4次。但LUNA16也忽略了不到3名医生标注的结节。我决定在训练集中保留这些被忽视的结节，因为他们也提供了宝贵的结节恶性信息。</p>
-</li>
-<li><p>LUNA16 v2数据集的标签是直接从LUNA16传来，一般是多个结节检测系统错误标出的假阳性结节。要注意的是，部分结节是上面提到的不到3名医生标记的结节。保留了这些结节标记，是为了平衡那些可疑的假阳性结节。</p>
-</li>
-<li><p>为了得到肺部轮廓，需要得到非肺组织的底片。使用了论坛中提到的简单肺分割算法，在分割掩码边缘周围进行采样标注，从而分割得到肺部组织。</p>
-</li>
-<li><p>在进行第一轮训练之后，在LUNA16数据集上进行结节预测，得到了所有假阳性结节，也并入LUNA16 v2数据集中。</p>
-</li>
-<li><p>NDSB数据集上训练网络。手动地从癌症样本中选择明显的阳性结节，并从非癌症样本中选择假阳性结节，用这些数据训练了第二个模型。（我希望效果不错，但我是一个不合格的放射科医生，实际上第二个模型比无手动标注的模型要糟糕得多。但是结合这两个模型，这个得到的融合模型比单独的模型效果更好，所以我保留了第二个模型。）</p>
-<hr>
-<p>​</p>
-<h3 id="UNet简介"><a href="#UNet简介" class="headerlink" title="UNet简介"></a><strong>UNet简介</strong></h3><h4 id="语义分割"><a href="#语义分割" class="headerlink" title="语义分割"></a><em>语义分割</em></h4><p>— 语义分割,简单来说就是给定一张图片,对图片中的每一个像素点进行分类</p>
-<p>​</p>
-<p>比如说下图,原始图片是一张街景图片,经过语义分割之后的图片就是一个包含若干种颜色的图片,其中每一种颜色都代表一类。</p>
-<p><img src="http://img.blog.csdn.net/20170421142155450?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkzMTU4Mg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
-<p>​</p>
-<p><em>注意区分目标检测（二分类）、目标识别（二分或多分类）、实例分割</em></p>
-<p>​</p>
-<h4 id="FCN与CNN"><a href="#FCN与CNN" class="headerlink" title="FCN与CNN"></a><em>FCN与CNN</em></h4><p>全卷积神经网络中,没有了全连接层,取而代之的是卷积层,如下图所示:</p>
-<p><img src="http://img.blog.csdn.net/20170423160054858?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkzMTU4Mg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
-<p>​</p>
-<p>最后一层输出的是1000个二维数组,其中每一个数组可以可视化成为一张图像,图中的每一个像素点的灰度值都是代表当前像素点属于该类的概率,比如在这1000张图像中,取出其中代表tabby cat的概率图,颜色从蓝到红,代表当前点属于该类的概率就越大。</p>
-<p>可以看出FCN与CNN之间的区别就是把最后几层的全连接层换成了卷积层,这样做的好处就是能够进行dense prediction。从而实现FCN对图像进行像素级的分类，从而解决了语义级别的图像分割（semantic segmentation）问题。与经典的CNN在卷积层之后使用全连接层得到固定长度的特征向量进行分类（全联接层＋softmax输出）不同，FCN可以接受任意尺寸的输入图像，采用反卷积层对最后一个卷积层的feature map进行上采样, 使它恢复到输入图像相同的尺寸，从而可以对每个像素都产生了一个预测, 同时保留了原始输入图像中的空间信息, 最后在上采样的特征图上进行逐像素分类。</p>
-<p>​</p>
-<p>U-Net 是这种方法中最常用的结构之一。</p>
-<p>​</p>
-<p><img src="http://img.blog.csdn.net/20170712171711426?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaGR1eGllanVu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
-<p>​</p>
-<p>​</p>
-<hr>
-<p>​</p>
-<h2 id="3D卷积神经网络的训练方法和网络结构"><a href="#3D卷积神经网络的训练方法和网络结构" class="headerlink" title="3D卷积神经网络的训练方法和网络结构"></a>3D卷积神经网络的训练方法和网络结构</h2><h3 id="基础结节检测器样本增强"><a href="#基础结节检测器样本增强" class="headerlink" title="基础结节检测器样本增强"></a>基础结节检测器样本增强</h3><p>第一个目标是训练一个可作为基础的结节检测器。先要对正面例子进行过采样，将正反两类的样本比上调到1:20。为了提高模型的泛化能力，尝试了一些图像增强操作，但是只有一些无损的操作是有用的。最后我用了大量的转化操作和所有3D翻转操作。</p>
-<h3 id="恶化程度回归模型"><a href="#恶化程度回归模型" class="headerlink" title="恶化程度回归模型"></a>恶化程度回归模型</h3><p>训练一个用于估计恶化程度的回归模型。将肿瘤恶化程度分为从1（很可能不是恶性）到5（很可能是恶性的）。为了强调肿瘤的恶性程度，将标签平方，范围扩大为从1到25。最开始，考虑了分阶段的一种方法，用第一个网络来分类节点，然后训练另一个网络估计结节的恶化程度。为了缩短计算时间，尝试只用一个网络，以多任务学习的方法，同时进行训练这两个任务。当编程实现后，发现这个方法简单快速，网络的效果也很好。</p>
-<h3 id="网络使用"><a href="#网络使用" class="headerlink" title="网络使用"></a>网络使用</h3><p>神经网络的结构上花费的时间相对较少，因为已经有很多优秀网络可供参考。刚开始我使用了一些简单的VGG网络和Resnet网络的相似结构，但是它们的性能大致相同。然后我尝试用一个预训练好的C3D网络，原有的网络权重根本没有帮助，但直接初始化权重后，这种网络结构的效果很好。基于C3D网络进行若干次调整后，我得到最终的分类评估网络。</p>
-<p><img src="https://pic2.zhimg.com/50/v2-94f56212df07f9800d49bf0a369e1696_hd.jpg" alt=""></p>
-<p>​</p>
-<h3 id="3D卷积神经网络简介"><a href="#3D卷积神经网络简介" class="headerlink" title="3D卷积神经网络简介"></a>3D卷积神经网络简介</h3><h4 id="提出背景"><a href="#提出背景" class="headerlink" title="提出背景"></a>提出背景</h4><p>基于视频分析的问题，2D convolution不能很好得捕获时序上的信息。因此3D convolution就被提出来了。</p>
-<p>​</p>
-<h4 id="C3D-network"><a href="#C3D-network" class="headerlink" title="C3D network"></a>C3D network</h4><p>C3D network是作为一个通用的网络提出的，文章中将其用于行为识别，场景识别，视频相似度分析等领域。</p>
-<p>​</p>
-<h4 id="2D-与-3D-卷积操作"><a href="#2D-与-3D-卷积操作" class="headerlink" title="2D 与 3D 卷积操作"></a>2D 与 3D 卷积操作</h4><p><img src="http://ofltv9hb9.bkt.clouddn.com/image/c3d/2d3dconv.png" alt=""></p>
-<p>a)和b)分别为2D卷积用于单通道图像和多通道图像的情况（此处多通道图像可以指同一张图片的3个颜色通道，也指多张堆叠在一起的图片，即一小段视频），对于一个滤波器，输出为一张二维的特征图，多通道的信息被完全压缩了。而c)中的3D卷积的输出仍然为3D的特征图。</p>
-<p>​</p>
-<p>现在考虑一个视频段输入，其大小为 c∗l∗h∗w,其中c为图像通道(一般为3),l为视频序列的长度，h和w分别为视频的宽与高。进行一次kernel size为3∗3∗3,stride为1,padding=True,滤波器个数为K的3D 卷积后，输出的大小为K∗l∗h∗w。池化同理。</p>
-<p>​</p>
-<h4 id="C3D-network-结构"><a href="#C3D-network-结构" class="headerlink" title="C3D network 结构"></a>C3D network 结构</h4><p><img src="http://ofltv9hb9.bkt.clouddn.com/image/c3d/c3d.png" alt=""></p>
-<p>基于3D卷积操作，作者设计了如上图所示的C3D network结构。共有8次卷积操作，4次池化操作。其中卷积核的大小均为3∗3∗3，即一次输入16帧图像。</p>
-<p>​</p>
-<h2 id="癌症预测"><a href="#癌症预测" class="headerlink" title="癌症预测"></a>癌症预测</h2><h3 id="结果与问题"><a href="#结果与问题" class="headerlink" title="结果与问题"></a>结果与问题</h3><p>训练好网络后，下一步是让神经网络检测结节并估计其恶化程度。</p>
-</li>
-<li><p>检测到了许多作者完全忽视的结节</p>
-</li>
-<li><p>严重的问题：错过了一些非常大的明显结节，所以影响了对于假阴性的得分，有时使LogLoss升高了3.00。</p>
-<h3 id="解决方式"><a href="#解决方式" class="headerlink" title="解决方式"></a>解决方式</h3><p>对CT图像进行了两次降采样，看看检测器是否会检测大结节。值得注意的是，它的效果非常好。因此，我调整了网络结构，让网络预测3个尺度，分别为1，1.5和2.0。</p>
-<p><img src="https://pic3.zhimg.com/v2-646cd2e4938aedc94d14f60e7f2ea102_r.jpg" alt=""></p>
-<p>在缩放1x的左图中，没有很好地检测到大结节；但是在2x放大的右图时，效果较好。矩形的大小表示检测到的恶性肿瘤。</p>
-</li>
-</ul>
-<h1 id="Kaggle-肺癌结节检测（Data-Science-Bowl-2017）微软团队解析"><a href="#Kaggle-肺癌结节检测（Data-Science-Bowl-2017）微软团队解析" class="headerlink" title="Kaggle 肺癌结节检测（Data Science Bowl 2017）微软团队解析"></a>Kaggle 肺癌结节检测（Data Science Bowl 2017）微软团队解析</h1><h2 id="基本信息-1"><a href="#基本信息-1" class="headerlink" title="基本信息"></a>基本信息</h2><p>微软的 Miguel Fierro, Ye Xing, Tao Wu 等人在 2017 年 1 月 Kaggle 上的“数据科学肺癌检测竞赛”里，在60 分钟内，利用已训练好的卷积神经网络 ResNet-157 提取 CT 图像的特征，并训练提升树（boosted tree），以识别肺癌 CT 影像是癌症阴性或阳性。他们获得了不错的成绩——1 月 19 日之前排名位前 10%，2 月 7 日之前，居前 20%（其实挺一般的）。</p>
-<h2 id="使用工具"><a href="#使用工具" class="headerlink" title="使用工具"></a>使用工具</h2><ol>
-<li>特征提取：已训练好的卷积神经网络——一个用 CNTK 开发的 152 层 ResNet 模型，用 ImageNet 的图像数据集进行的训练；</li>
-<li>图像分类：LightGBM 灰度提升框架；</li>
-<li>带 GPU 加速的 Azure 虚机；</li>
-</ol>
-<p><em>个人感觉最normal的方法吧</em>，谁让kaggle这个判断只是否具有癌症。</p>
-<h4 id="LightGBM"><a href="#LightGBM" class="headerlink" title="LightGBM"></a>LightGBM</h4><p>LightGBM是微软DMTK框架的一部分，将灰度提升树用于分布式集群上，以达到更快的速度，而且随着节点数增加，可以成比例地提高计算性能。<a href="https://medium.com/implodinggradients/benchmarking-lightgbm-how-fast-is-lightgbm-vs-xgboost-15d224568031" target="_blank" rel="noopener">据好事者测，比XGBoost快10倍，内存使用稍微少些</a>。作为微软AI的两大利器，<a href="https://www.dmtk.io/" target="_blank" rel="noopener">DMTK（Distributed Machine Learning Toolkit）</a>主要优势是分布式，而非深度学习。<a href="http://cntk.ai/" target="_blank" rel="noopener">CNTK</a>的优势在于深度学习，所以这两种常常一起用。</p>
-<h2 id="技术细节"><a href="#技术细节" class="headerlink" title="技术细节"></a>技术细节</h2><ul>
-<li>像 ImageNet 的 RBG 样本那样，裁切到 224x224 大小，三张一组。分成 K 批输入前面提到的已训练的神经网络，计算到“pentimate layer”为止。</li>
-<li>去掉最后的pooling 和 softmax 层，设置penultimate layer，作为输出及分类器输入。</li>
-<li>LightGBM分类器（实验时候尝试的，之后换成了ResNet）</li>
-</ul>
-<p><img src="https://res.infoq.com/articles/resnet-azure-gpu/zh/resources/25.png" alt=""></p>
-<h1 id="阿里天池肺部结节智能检测"><a href="#阿里天池肺部结节智能检测" class="headerlink" title="阿里天池肺部结节智能检测"></a>阿里天池肺部结节智能检测</h1><h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><ul>
-<li>肺癌-世界死亡率最高的癌症</li>
-<li>CT 影像-肺癌检测最直接有效的工具</li>
-<li>肺结节-肺癌的早期临床表现</li>
-<li>肺结节检测-肺癌检测中最重要的环节</li>
-<li>医生使用逐层观察的阅片方式</li>
-<li>3D检测</li>
-<li>结合医学知识</li>
-</ul>
-<p><img src="/img/02/1.png" alt="img"></p>
-<p><img src="/img/02/2.png" alt="img"></p>
-<p><img src="/img/02/3.png" alt="img"></p>
-<h2 id="相关比赛介绍"><a href="#相关比赛介绍" class="headerlink" title="相关比赛介绍"></a>相关比赛介绍</h2><h3 id="LUNA2016"><a href="#LUNA2016" class="headerlink" title="LUNA2016"></a>LUNA2016</h3><ul>
-<li>888例CT图像</li>
-<li>结节检测与良恶性判别</li>
-<li>需提交结节坐标与概率</li>
-<li>FROC、十折交叉验证作为评价指标</li>
-</ul>
-<h3 id="LUNA2016中作者使用的方法"><a href="#LUNA2016中作者使用的方法" class="headerlink" title="LUNA2016中作者使用的方法"></a>LUNA2016中作者使用的方法</h3><p><img src="/img/02/4.png" alt="img"></p>
+            <h1 id="目标定位"><a href="#目标定位" class="headerlink" title="目标定位"></a>目标定位</h1><p>简而言之，目标检测的目的就是不仅仅要分别出物体是不是我们要识别的类型，还要做到定位出它所在位置。也就是我们所说的，classification with localization problem。其中也包括有多分类定位与简单检测。</p>
+<p><img src="/img/03/1.jpeg" alt=""></p>
+<h2 id="图像分类"><a href="#图像分类" class="headerlink" title="图像分类"></a>图像分类</h2><p><img src="/img/03/2.jpeg" alt=""></p>
+<p>通常我们进行图片分类，所使用的方法就是卷积神经网络进行特征提取+Softmax分类的传统架构，当然其中不乏各种能提升效果的变体框架，如Inception、Res、VGG等等。</p>
+<h2 id="目标分类与目标定位"><a href="#目标分类与目标定位" class="headerlink" title="目标分类与目标定位"></a>目标分类与目标定位</h2><p>那么我们该怎么进行定位工作呢？</p>
+<p>同样我们使用最暴力的想法的话，就是让我们训练的模型再额外输出四个值，分别对应图像中四个角的位置。</p>
+<p><img src="/img/03/3.jpeg" alt=""></p>
+<p>那我们该如何设置这一系列我们所需要的值为一个训练输出Y？</p>
+<p><img src="/img/03/4.jpeg" alt=""></p>
+<p>其中</p>
 <ul>
-<li>Faster—    RCNN逐层扫描，连续三个图作为RGB三个通道，VGG-16</li>
-<li>Feature map增大——反卷积</li>
-<li>anchor大小调整</li>
-<li>设计三维NMS（极大值抑制）方案合并二维图像</li>
-<li>最后 利用3D VGG网络 进行分类</li>
-<li>第一名</li>
+<li>Pn代表是否具有物体</li>
+<li>Bx、By、Bh、Bw分别代表如果有物体，其范围如何</li>
+<li>C1，C2，C3 代表该物体属于哪一个类别</li>
 </ul>
-<h3 id="Kaggle-Data-Science-Bowl-2017"><a href="#Kaggle-Data-Science-Bowl-2017" class="headerlink" title="Kaggle Data Science Bowl 2017"></a>Kaggle Data Science Bowl 2017</h3><ul>
-<li>癌症预测</li>
-<li>1600例训练数据和500例测试数据</li>
-<li>标注是否会得癌症</li>
-<li>二分类交叉熵损失</li>
+<p>若不存在物体，则可以如此表示</p>
+<p><img src="/img/03/5.jpeg" alt=""></p>
+<p>最简单的损失函数可以如下设置：</p>
+<p><img src="/img/03/6.jpeg" alt=""></p>
+<p>虽然简化，但是确实你可以这么做，不一定非得在分类部分使用对数损失。</p>
+<h2 id="特征点检测"><a href="#特征点检测" class="headerlink" title="特征点检测"></a>特征点检测</h2><p>如果识别的图片存在某些特殊的你想获取的点，不妨让模型再最后输出部分再输出你所设置为特征点的坐标，同时进行训练。</p>
+<p><img src="/img/03/7.jpeg" alt=""></p>
+<p>类似的技术，可以实现AR增强现实与行为姿态检测的任务。</p>
+<h1 id="基于滑动窗口的目标检测"><a href="#基于滑动窗口的目标检测" class="headerlink" title="基于滑动窗口的目标检测"></a>基于滑动窗口的目标检测</h1><h2 id="一般滑动窗口的方式"><a href="#一般滑动窗口的方式" class="headerlink" title="一般滑动窗口的方式"></a>一般滑动窗口的方式</h2><p>在实现基于滑动窗口的目标检测之前，我们还是要训练一个分类器的，然后在其之上进行滑动窗口的检测。</p>
+<p><img src="/img/03/8.jpeg" alt=""></p>
+<p><img src="/img/03/9.jpeg" alt=""></p>
+<p>缺点：计算成本过大，特别是加上卷积之后。</p>
+<h2 id="卷积的滑动窗口的实现"><a href="#卷积的滑动窗口的实现" class="headerlink" title="卷积的滑动窗口的实现"></a>卷积的滑动窗口的实现</h2><p>全连接到卷积的一点小改变，改变的目的就是为了让卷积之后的每一个区域都有一个softmax的结果：</p>
+<p><img src="/img/03/10.jpeg" alt=""></p>
+<p>其实，作为四张图片输入和卷积之后的四个区域是有一定关系的，卷积之后再切分可以共享很多计算，使得卷积滑动窗口计算成本大幅度降低。池化参数相当于步长。</p>
+<p><img src="/img/03/11.jpeg" alt=""></p>
+<p>如果幸运的话，你就能够找到想要的区域。而且只用进行一次卷积操作。</p>
+<h1 id="Bounding-Box-预测"><a href="#Bounding-Box-预测" class="headerlink" title="Bounding Box 预测"></a>Bounding Box 预测</h1><h2 id="YOLO算法初探"><a href="#YOLO算法初探" class="headerlink" title="YOLO算法初探"></a>YOLO算法初探</h2><p>将整张图片分为多个部分，比如在这里是九个部分，九个部分都是用上面介绍的图像检测算法。</p>
+<p>这样我们会得到一个3X3X8的输出，这就是我们最终用来训练的东西。</p>
+<p><img src="/img/03/12.jpeg" alt=""></p>
+<p>当然在真实使用的时候，网格可能精细得多。</p>
+<p>好处在于，九个格子都是共用一套神经网络，所以训练起来方便很多！</p>
+<p>另外还提到如何确定某个格子内框框的表示问题，在这儿只是给出一个行之有效的方式。</p>
+<p><img src="/img/03/13.jpeg" alt=""></p>
+<p>左上和右下分别表示为(0,0)、(1,1)，中间橙色点为X，Y的坐标定位，H、W则使用比例尺表示。</p>
+<h2 id="交并比（IoU）"><a href="#交并比（IoU）" class="headerlink" title="交并比（IoU）"></a>交并比（IoU）</h2><p>如何判断网络运行得好还是坏呢，那就是交并比函数。</p>
+<p>简单来说就是交集和并集的比率。一般约定0.5为一个能够接受的值。</p>
+<p><img src="/img/03/14.jpeg" alt=""></p>
+<h2 id="非极大值抑制（Nms）"><a href="#非极大值抑制（Nms）" class="headerlink" title="非极大值抑制（Nms）"></a>非极大值抑制（Nms）</h2><p>在19X19的网格网络中，很多区域都会认为他们自己内部包含了我们要检测的目标物，那么我们如何使用这些标签呢，如何确定一个重点？</p>
+<p><img src="/img/03/15.jpeg" alt=""></p>
+<p>举个简单例子，在下面这块区域中，有多个重叠，概率值比较高的区域判定其中包含我们需要检测的物体，我们其中值最大的选用其范围，所有和这个最大边界框有很高iou值的其他边界框都会被抑制，如果我们直接删除这些边界框，就得到了另一个结果。</p>
+<p><img src="/img/03/16.jpeg" alt=""></p>
+<p><img src="/img/03/17.jpeg" alt=""></p>
+<p>算法细节上，我们通过通过得到的19X19X5（只做汽车识别的话）的区域给定一个概率阈值，然后判断剩下区域的概率值和IOU值进行遍历过滤，最终会得到我们想要的结果的。</p>
+<h2 id="Anchor-Boxes"><a href="#Anchor-Boxes" class="headerlink" title="Anchor Boxes"></a>Anchor Boxes</h2><p>如果想检测出多个不同的物体，我们就需要使用Anchor Box这个概念。</p>
+<p>比如现在我们有这样一个3X3的图片分割。如果两个我们要检测的物体重叠的太厉害，根据我们上面定义的输出其实是无法解决的。</p>
+<p>通过anchor box 我们将输出分别绑定了不同的anchor box，输出不同的值。</p>
+<p><img src="/img/03/18.jpeg" alt=""></p>
+<p>具体而言，之前我们输出的八个值，比如该图我们得到的结果会是3X3X8的样子。而现在我们要根据不同类别形状对应按个anchor box的IOU值更高，将其分配到不同的区域之中去。这样我们得到的就是3X3X16的输出。举个例子：</p>
+<p><img src="/img/03/19.jpeg" alt=""></p>
+<p><img src="/img/03/20.jpeg" alt=""></p>
+<p>当然有些情况还是处理不好，比如两个检测的物体还是重叠的……那场面就很很尴尬，需要引入其他方式来解决这个问题。</p>
+<p>anchor box 很多人都是手工来定义的，YOLO中其实给了比较好的做法。</p>
+<p>当然也有自动选择anchor box的算法。</p>
+<h1 id="YOLO"><a href="#YOLO" class="headerlink" title="YOLO"></a>YOLO</h1><p>现在我们要将上面所涉及的所有东西组合成我们要使用的YOLO算法。</p>
+<p>依旧老生常谈，3X3转化为3X3X2X8，在使用两个anchor box+3个类别需要识别的情况下。</p>
+<p><img src="/img/03/21.jpeg" alt=""></p>
+<p>然后运行nms的过程。首先得到识别结果，然后抛弃概率值低的，最后进行非极大值抑制</p>
+<p><img src="/img/03/22.jpeg" alt=""></p>
+<p><img src="/img/03/23.jpeg" alt=""></p>
+<p><img src="/img/03/24.jpeg" alt=""></p>
+<p>老铁，没毛病！</p>
+<h1 id="候选区域（Region-Proposal）"><a href="#候选区域（Region-Proposal）" class="headerlink" title="候选区域（Region Proposal）"></a>候选区域（Region Proposal）</h1><p>非常具有影响力的研究，之后可能会单独写博文</p>
+<h2 id="R-CNN"><a href="#R-CNN" class="headerlink" title="R-CNN"></a>R-CNN</h2><p>克服了传统滑动窗口在没有必要检测区域浪费时间的问题，只选择某些window。</p>
+<p>思想是运行图像分割技术，获得色块，然后在不同色块上运行CNN。</p>
+<p><img src="/img/03/25.jpeg" alt=""></p>
+<h2 id="R-CNN演变史"><a href="#R-CNN演变史" class="headerlink" title="R-CNN演变史"></a>R-CNN演变史</h2><ul>
+<li><p>R-CNN</p>
+<p>用某些算法获得候选区域，然后对每个候选区域跑一下分类器，每个区域输出一个标签，并输出一个边界框。R-CNN并不会完全信任这个边界框，它自己也会输出一个边界框。获得更加精确的结果。</p>
+<p>缺点就是，也很慢……</p>
+</li>
+<li><p>Fast-RCNN</p>
+<p>使用了卷积滑动，就如之前所说，卷积之后的滑动窗口进行R-CNN。</p>
+<p>缺点就是，还是不够快……因为获取候选区域的部分还是很缓慢。</p>
+</li>
+<li><p>Faster-RCNN</p>
+<p>卷积网络而不是传统分割方法获取候选区域。</p>
+</li>
+<li><p>他们都比YOLO要慢</p>
+</li>
 </ul>
-<h3 id="Kaggle竞赛中作者的解决方案"><a href="#Kaggle竞赛中作者的解决方案" class="headerlink" title="Kaggle竞赛中作者的解决方案"></a>Kaggle竞赛中作者的解决方案</h3><ul>
-<li>2D Faster RCNN + 3D CNN检测</li>
-<li>利用LIDC-IDRI数据集的结节良恶信息进行结节分类</li>
-<li>获得第四名</li>
-</ul>
-<h3 id="天池医疗AI大赛"><a href="#天池医疗AI大赛" class="headerlink" title="天池医疗AI大赛"></a>天池医疗AI大赛</h3><ul>
-<li>初复赛不同</li>
-<li>复赛意义不大。</li>
-</ul>
-<p><img src="/img/02/5.png" alt="img"></p>
-<h2 id="问题难点"><a href="#问题难点" class="headerlink" title="问题难点"></a>问题难点</h2><ul>
-<li>肺结节体积变化大、形状各异</li>
-<li>肺结节亮度差异大</li>
-<li>肺内环境复杂</li>
-<li>CT成像质量有差异</li>
-</ul>
-<ul>
-<li><p>肺门区域结节（非孤立结节，附近有器官、气管等影响），需要整合多尺度信息，有效地将结节与正常组织区分开。</p>
-<p><img src="/img/02/6.png" alt="img"></p>
-</li>
-<li><p>磨玻璃结节，亮度低，形状不规则。</p>
-</li>
-</ul>
-<p><img src="/img/02/7.png" alt="img"></p>
-<ul>
-<li>结节临床意义分析。</li>
-</ul>
-<h2 id="复赛使用方法"><a href="#复赛使用方法" class="headerlink" title="复赛使用方法"></a>复赛使用方法</h2><h3 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h3><p><em>NOTE：其实初赛还是使用faster rcnn，只是由于复赛条件限制改变了。所以略。</em></p>
-<p><img src="/img/02/8.png" alt="img"></p>
-<h3 id="特征金字塔网络"><a href="#特征金字塔网络" class="headerlink" title="特征金字塔网络"></a>特征金字塔网络</h3><p><strong>特征金字塔</strong>在基于深度学习的多尺度目标检测中早有应用，通常有以下几种使用方式。</p>
-<p>（1）网络是一个简单的全卷积网络，为了检测不同尺度的目标，依次将原图按比例缩放并送入网络。缺点是需要多次resize图像，繁琐耗时。</p>
-<p><img src="http://img.blog.csdn.net/20170207171308454?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc2h1emZhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
-<p>（2） 网络是一个高深的全卷积网络，输入任意尺寸的原图，得到一个feature map，在feature map上进行多个尺度的目标位置回归。 R-CNN系列就是这种方法。缺点是容易漏掉小目标，同时搞定多个尺度难度较大。</p>
-<p><img src="http://img.blog.csdn.net/20170207172506636?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc2h1emZhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
-<p>（3） 对(2)进行改进，在不同分辨率的feature map上进行目标位置预测。缺点是底部的feature map的特征表达能力不足。</p>
-<p><img src="http://img.blog.csdn.net/20170207173108056?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc2h1emZhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
-<p>（4）有点类似(2)和(3)的组合，既可以在不同分辨率的feature map上检测对应尺度的目标，同时feature map又具有足够的特征表达能力。这是因为每层的feature map来源于当前层和更高级层的特征融合。</p>
-<p><img src="http://img.blog.csdn.net/20170207173726622?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc2h1emZhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
-<p>具体的融合方法如下图所示，每一级的feature map尺寸都是2倍的关系，“2x up”采用的是最简单的最近邻上采样。</p>
-<h1 id="资料参考与借鉴"><a href="#资料参考与借鉴" class="headerlink" title="资料参考与借鉴"></a>资料参考与借鉴</h1><ol>
-<li><p><a href="https://zhuanlan.zhihu.com/p/26767213" target="_blank" rel="noopener">Kaggle百万美元大赛优胜者：用CNN识别CT图像检测肺癌</a></p>
-</li>
-<li><p><a href="http://blog.csdn.net/u012931582/article/details/70314859" target="_blank" rel="noopener">语义分割(semantic segmentation) 常用神经网络介绍对比-FCN SegNet U-net DeconvNet</a></p>
-</li>
-<li><p><a href="https://github.com/juliandewit/kaggle_ndsb2017" target="_blank" rel="noopener">Github 源码</a></p>
-</li>
-<li><p><a href="http://www.10tiao.com/html/157/201705/2653162413/1.html" target="_blank" rel="noopener">一篇文章掌握Kaggle竞赛中的基于ResNet和Azure GPU加速的肺癌CT图像识别</a></p>
-</li>
-<li><p><a href="http://blog.csdn.net/shuzfan/article/details/54913369" target="_blank" rel="noopener">目标检测——特征金字塔网络</a></p>
-<p>​</p>
-</li>
-</ol>
 
           
         
@@ -563,7 +456,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -609,7 +502,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -664,7 +557,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
